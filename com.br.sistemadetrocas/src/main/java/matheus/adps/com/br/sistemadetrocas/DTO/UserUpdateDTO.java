@@ -39,7 +39,7 @@ public class UserUpdateDTO
 			String complement, 
 			String state, 
 			String city,
-			int zipCode) 
+			int zipCode)
 	{
 		this.email = email;
 		this.fullName = fullName;

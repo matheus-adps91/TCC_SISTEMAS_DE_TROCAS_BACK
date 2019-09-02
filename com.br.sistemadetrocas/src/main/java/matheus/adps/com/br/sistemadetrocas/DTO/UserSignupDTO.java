@@ -31,7 +31,6 @@ public class UserSignupDTO
 	@JsonProperty
 	private int zipCode;
 
-	
 	public UserSignupDTO() {			
 	}
 

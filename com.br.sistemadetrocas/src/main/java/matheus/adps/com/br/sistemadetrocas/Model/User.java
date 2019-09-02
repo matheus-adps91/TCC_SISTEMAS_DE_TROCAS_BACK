@@ -41,7 +41,6 @@ public class User
 	@Column( nullable = true )
 	private String complement;
 	
-	@NotNull
 	@Column( nullable = false )
 	private String state;
 	

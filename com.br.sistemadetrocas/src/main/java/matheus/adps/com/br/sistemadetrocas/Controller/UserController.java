@@ -22,11 +22,7 @@ public class UserController
 	@Autowired
 	private UserService userService;
 
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
-
-	@PostMapping( path = "/create")
+	@PostMapping( path = "/create" )
 	public void create(
 			@RequestBody final UserSignupDTO userSignupDTO)
 	{

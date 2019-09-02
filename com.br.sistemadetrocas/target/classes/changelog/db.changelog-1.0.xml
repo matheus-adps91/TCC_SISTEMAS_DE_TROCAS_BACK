@@ -9,40 +9,69 @@
 	<changeSet id="1" author="matheus.silva">
 	
 		<createSequence sequenceName="hibernate_sequence" />
-		<createSequence sequenceName="user_seq"/>
+		<createSequence sequenceName="user_seq" />
 		
 		<createTable tableName="user_entity">
 			<column name="id" type="int"
 				valueSequenceNext="user_seq">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="email" type="varchar(255)">
+			<column name="email" type="varchar(25)">
 				<constraints nullable="false" unique="true"/>
 			</column>
-			<column name="password" type="varchar(255)">
+			<column name="password" type="varchar(6)">
 				<constraints nullable="false" />
 			</column>
-			<column name="full_name" type="varchar(255)">
+			<column name="full_name" type="varchar(60)">
 				<constraints nullable="false" />
 			</column>
-			<column name="gender" type="varchar(255)">
+			<column name="gender" type="varchar(9)">
 				<constraints nullable="false" />
 			</column>
-			<column name="address" type="varchar(255)">
+			<column name="address" type="varchar(25)">
 				<constraints nullable="false" />
 			</column>
-			<column name="complement" type="varchar(255)">
+			<column name="complement" type="varchar(15)">
 				<constraints nullable="true" />
 			</column>
-			<column name="state" type="varchar(255)">
+			<column name="state" type="varchar(15)">
 				<constraints nullable="false" />
 			</column>
-			<column name="city" type="varchar(255)">
+			<column name="city" type="varchar(15)">
 				<constraints nullable="false" />
 			</column>
 			<column name="zip_code" type="int">
 				<constraints nullable="false" unique="true" />
 			</column>
 		</createTable>
+	</changeSet>
+	
+	<changeSet id="2" author="matheus.silva">
+		
+		<createSequence sequenceName="product_category_seq"/>
+		
+		<createTable tableName="product_category_entity">			
+			<column name="id" type="int"
+				valueSequenceNext="product_category_seq">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="code" type="varchar(6)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="category" type="varchar(15)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ftsubcategory" type="varchar(15)">
+				<constraints nullable="false" />
+			</column>
+			<column name="sdsubcategory" type="varchar(15)">
+				<constraints nullable="true" />
+			</column>
+			<column name="description" type="varchar(255)">
+				<constraints nullable="true"/>
+			</column>					
+		</createTable>
+		
+	
 	</changeSet>
 </databaseChangeLog>

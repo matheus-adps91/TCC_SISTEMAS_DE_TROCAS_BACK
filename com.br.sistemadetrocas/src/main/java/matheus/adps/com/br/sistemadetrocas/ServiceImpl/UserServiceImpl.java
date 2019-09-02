@@ -14,7 +14,9 @@ import matheus.adps.com.br.sistemadetrocas.Repository.UserRepository;
 import matheus.adps.com.br.sistemadetrocas.Service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService 
+public class UserServiceImpl 
+	implements 
+		UserService 
 {
 	@Autowired
 	private UserRepository userRepository;
@@ -29,15 +31,15 @@ public class UserServiceImpl implements UserService
 		}
 		final User user = new User
 				(
-						userSignupDTO.getEmail(),
-						userSignupDTO.getPassword(),
-						userSignupDTO.getFullName(),
-						userSignupDTO.getGender(),
-						userSignupDTO.getAddress(),
-						userSignupDTO.getComplement(),
-						userSignupDTO.getState(),
-						userSignupDTO.getCity(),
-						userSignupDTO.getZipCode()
+					userSignupDTO.getEmail(),
+					userSignupDTO.getPassword(),
+					userSignupDTO.getFullName(),
+					userSignupDTO.getGender(),
+					userSignupDTO.getAddress(),
+					userSignupDTO.getComplement(),
+					userSignupDTO.getState(),
+					userSignupDTO.getCity(),
+					userSignupDTO.getZipCode()
 				);
 
 		userRepository.save(user);
