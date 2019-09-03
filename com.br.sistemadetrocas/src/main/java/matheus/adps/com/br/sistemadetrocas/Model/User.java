@@ -11,7 +11,6 @@ import com.sun.istack.NotNull;
 
 @Entity
 @Table( name = "user_entity", schema = "public" )
-
 public class User 
 {
 	@Id	
@@ -19,40 +18,39 @@ public class User
 	private Integer id;
 	
 	@NotNull
-	@Column( nullable = false )
+	@Column
 	private String email;
 	
 	@NotNull
-	@Column( nullable = false)
+	@Column
 	private String password;
 	
 	@NotNull
-	@Column( nullable = false )
+	@Column
 	private String fullName;
 	 
 	@NotNull
-	@Column( nullable = false)
+	@Column
 	private String gender;
 	
 	@NotNull
-	@Column( nullable = false )
+	@Column
 	private String address;
 	
-	@Column( nullable = true )
+	@Column
 	private String complement;
 	
-	@Column( nullable = false )
+	@Column
 	private String state;
 	
 	@NotNull
-	@Column( nullable = false )
+	@Column
 	private String city;
 	
 	@NotNull
-	@Column( nullable = false )
+	@Column
 	private int zipCode;
 
-	
 	public User() {
 	}
 

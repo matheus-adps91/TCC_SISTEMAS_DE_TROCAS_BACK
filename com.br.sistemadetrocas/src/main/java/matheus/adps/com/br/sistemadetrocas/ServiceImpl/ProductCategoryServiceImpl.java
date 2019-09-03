@@ -24,24 +24,24 @@ public class ProductCategoryServiceImpl
 	public void create(
 			final ProductCategoryDTO productCategoryDTO)
 	{
-		final Optional<ProductCategory> optionalProductCategory = pcRepository.findByCode(productCategoryDTO.getCode());
-		if ( optionalProductCategory.isPresent() ) {
+		final ProductCategory retrievedProductCategory = getByCode(productCategoryDTO.getCode());
+		if ( productCategoryDTO.getCode().equals(retrievedProductCategory.getCode()) ) {
 			throw new ProductCategoryDuplicateException("Categoria de Produto já cadastrada");
 		}
 		final ProductCategory productCategory = new ProductCategory
-				(
-						productCategoryDTO.getCode(),
-						productCategoryDTO.getCategory(),
-						productCategoryDTO.getFtsubcategory(),
-						productCategoryDTO.getSdsubcategory(),
-						productCategoryDTO.getDescription()
-				);
+			(
+				productCategoryDTO.getCode(),
+				productCategoryDTO.getCategory(),
+				productCategoryDTO.getFtsubcategory(),
+				productCategoryDTO.getSdsubcategory()
+			);
 		pcRepository.save(productCategory);
 	}
 
 	@Override
 	public ProductCategory getByCode(
-			final String code) {
+			final String code) 
+	{
 		final Optional<ProductCategory> optionalProductCategory = pcRepository.findByCode(code);
 		if ( ! optionalProductCategory.isPresent() ) {
 			throw new ProductCategoryNotFoundException("Categoria de Produto não encontrada");
@@ -50,15 +50,14 @@ public class ProductCategoryServiceImpl
 	}
 
 	@Override
-	public void update(ProductCategoryDTO productCategoryDTO) {
-		// TODO Auto-generated method stub
-
+	public void update(
+			final ProductCategoryDTO productCategoryDTO) 
+	{
+		final ProductCategory productCategory = getByCode(productCategoryDTO.getCode());
+		productCategory.setCode(productCategoryDTO.getCode());
+		productCategory.setCategory(productCategoryDTO.getCategory());
+		productCategory.setFtSubcategory(productCategoryDTO.getFtsubcategory());
+		productCategory.setSdSubCategory(productCategoryDTO.getSdsubcategory());
+		pcRepository.save(productCategory);
 	}
-
-	@Override
-	public void deleteProductCategory(String code) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

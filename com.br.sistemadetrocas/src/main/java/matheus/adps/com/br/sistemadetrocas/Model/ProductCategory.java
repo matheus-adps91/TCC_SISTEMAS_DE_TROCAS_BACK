@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 @Entity
 @Table( name = "product_category_entity" )
 public class ProductCategory
@@ -15,20 +17,21 @@ public class ProductCategory
 	@GeneratedValue( strategy = GenerationType.SEQUENCE )
 	private Integer id;
 	
-	@Column( nullable = false, unique = true )
+	@NotNull
+	@Column( unique = true )
 	private String code;
 	
-	@Column( nullable = false )
+	@NotNull
+	@Column
 	private String category;
 
-	@Column( nullable = false )
+	@NotNull
+	@Column
 	private String ftsubcategory;
 
-	@Column( nullable = true)
+	@NotNull
+	@Column
 	private String sdsubcategory;
-	
-	@Column( nullable = true )
-	private String description;
 
 	public ProductCategory() {
 	}
@@ -37,14 +40,16 @@ public class ProductCategory
 			String code,
 			String category, 
 			String ftsubcategory, 
-			String sdsubcategory, 
-			String description) 
+			String sdsubcategory) 
 	{
 		this.code = code;
 		this.category = category;
 		this.ftsubcategory = ftsubcategory;
 		this.sdsubcategory = sdsubcategory;
-		this.description = description;
+	}
+	
+	public String getCode() {
+		return code;
 	}
 
 	public void setCode(String code) {
@@ -61,9 +66,5 @@ public class ProductCategory
 
 	public void setSdSubCategory(String sdsubcategory) {
 		this.sdsubcategory = sdsubcategory;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 }

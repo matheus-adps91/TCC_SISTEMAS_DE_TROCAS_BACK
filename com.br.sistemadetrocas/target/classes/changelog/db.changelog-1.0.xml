@@ -66,12 +66,39 @@
 			</column>
 			<column name="sdsubcategory" type="varchar(15)">
 				<constraints nullable="true" />
+			</column>				
+		</createTable>
+		
+	</changeSet>
+	
+	<changeSet id="3" author="matheus.silva">
+	
+		<createSequence sequenceName="product_seq"/>
+		
+		<createTable tableName="product_entity">
+			<column name="id" type="int"
+				valueSequenceNext="product_seq">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="code" type="varchar(6)">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="name" type="varchar(6)">
+				<constraints nullable="false" unique="true" />
 			</column>
 			<column name="description" type="varchar(255)">
 				<constraints nullable="true"/>
-			</column>					
+			</column>
+			<column name="id_product_category" type="int">
+				<constraints nullable="false"/>
+			</column>	
 		</createTable>
 		
-	
+		<addForeignKeyConstraint 
+			constraintName="fk_product_category_product" 
+			referencedTableName="product_category_entity" referencedColumnNames="id"
+			baseTableName="product_entity" baseColumnNames="id_product_category" />
+			
 	</changeSet>
+	
 </databaseChangeLog>

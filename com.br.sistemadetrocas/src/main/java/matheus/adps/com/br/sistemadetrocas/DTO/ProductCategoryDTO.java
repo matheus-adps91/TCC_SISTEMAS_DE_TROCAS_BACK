@@ -15,9 +15,6 @@ public class ProductCategoryDTO
 	
 	@JsonProperty
 	private String sdsubcategory;
-	
-	@JsonProperty
-	private String description;
 
 	public ProductCategoryDTO() {
 	}
@@ -26,14 +23,12 @@ public class ProductCategoryDTO
 			String code,
 			String category, 
 			String ftsubcategory, 
-			String sdsubcategory, 
-			String description)
+			String sdsubcategory)
 	{
 		this.code = code;
 		this.category = category;
 		this.ftsubcategory = ftsubcategory;
 		this.sdsubcategory = sdsubcategory;
-		this.description = description;
 	}
 
 	public String getCode() {
@@ -51,8 +46,4 @@ public class ProductCategoryDTO
 	public String getSdsubcategory() {
 		return sdsubcategory;
 	}
-
-	public String getDescription() {
-		return description;
-	}	
 }

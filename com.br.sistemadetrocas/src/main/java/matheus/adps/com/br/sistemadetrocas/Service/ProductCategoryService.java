@@ -13,7 +13,4 @@ public interface ProductCategoryService
 	
 	public void update(
 			ProductCategoryDTO productCategoryDTO);
-	
-	public void deleteProductCategory(
-			String code);
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +33,12 @@ public class ProductCategoryController
 			@RequestBody final String code)
 	{
 		return new ResponseEntity<>(pcService.getByCode(code), HttpStatus.OK);
+	}
+	
+	@PatchMapping( path = "/update" )
+	public void update(
+			@RequestBody final ProductCategoryDTO productCategoryDTO) 
+	{
+		pcService.update(productCategoryDTO);
 	}
 }
