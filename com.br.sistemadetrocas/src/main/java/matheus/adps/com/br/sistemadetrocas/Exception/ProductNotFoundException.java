@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.Exception;
+package matheus.adps.com.br.sistemadetrocas.exception;
 
 public class ProductNotFoundException
 	extends 

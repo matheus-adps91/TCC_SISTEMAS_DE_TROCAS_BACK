@@ -1,17 +1,17 @@
-package matheus.adps.com.br.sistemadetrocas.ServiceImpl;
+package matheus.adps.com.br.sistemadetrocas.serviceimpl;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.UserSignupDTO;
-import matheus.adps.com.br.sistemadetrocas.DTO.UserUpdateDTO;
-import matheus.adps.com.br.sistemadetrocas.Exception.UserDuplicateException;
-import matheus.adps.com.br.sistemadetrocas.Exception.UserNotFoundException;
-import matheus.adps.com.br.sistemadetrocas.Model.User;
-import matheus.adps.com.br.sistemadetrocas.Repository.UserRepository;
-import matheus.adps.com.br.sistemadetrocas.Service.UserService;
+import matheus.adps.com.br.sistemadetrocas.dto.UserSignupDTO;
+import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
+import matheus.adps.com.br.sistemadetrocas.exception.UserDuplicateException;
+import matheus.adps.com.br.sistemadetrocas.exception.UserNotFoundException;
+import matheus.adps.com.br.sistemadetrocas.model.User;
+import matheus.adps.com.br.sistemadetrocas.repository.UserRepository;
+import matheus.adps.com.br.sistemadetrocas.service.UserService;
 
 @Service
 public class UserServiceImpl 

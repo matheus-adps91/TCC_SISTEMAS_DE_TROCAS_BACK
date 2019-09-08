@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.Model;
+package matheus.adps.com.br.sistemadetrocas.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
 @Entity
+@Table( name="product_entity")
 public class Product 
 {
     @Id
@@ -30,10 +32,11 @@ public class Product
 	private String description;
 	
 	@ManyToOne
-	@JoinColumn( name = "id_category", foreignKey = @ForeignKey( name = "fk_product_category_product"), nullable = false)
+	@JoinColumn( name = "id_product_category", foreignKey = @ForeignKey( name = "fk_product_category_product"), nullable = false)
 	private ProductCategory productCategory;
 
-	public Product() {
+	public Product() 
+	{
 	}
 
 	public Product(

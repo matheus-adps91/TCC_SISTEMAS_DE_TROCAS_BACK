@@ -1,18 +1,19 @@
-package matheus.adps.com.br.sistemadetrocas.Controller;
+package matheus.adps.com.br.sistemadetrocas.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.ProductCategoryDTO;
-import matheus.adps.com.br.sistemadetrocas.Model.ProductCategory;
-import matheus.adps.com.br.sistemadetrocas.Service.ProductCategoryService;
+import matheus.adps.com.br.sistemadetrocas.dto.ProductCategoryDTO;
+import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
+import matheus.adps.com.br.sistemadetrocas.service.ProductCategoryService;
 
 @RestController
 @RequestMapping( "/product-category" )
@@ -22,15 +23,15 @@ public class ProductCategoryController
 	private ProductCategoryService pcService;
 	
 	@PostMapping( path = "/create" )
-	public void create(
+	public ResponseEntity<ProductCategory> create(
 			@RequestBody final ProductCategoryDTO productCategoryDTO)
 	{
-		pcService.create(productCategoryDTO);
+		return new ResponseEntity<>(pcService.create(productCategoryDTO), HttpStatus.CREATED);
 	}
 	
-	@GetMapping( path = "/get" )
+	@GetMapping( path = "/get-by-code/{code}" )
 	public ResponseEntity<ProductCategory> get(
-			@RequestBody final String code)
+			@PathVariable final String code)
 	{
 		return new ResponseEntity<>(pcService.getByCode(code), HttpStatus.OK);
 	}

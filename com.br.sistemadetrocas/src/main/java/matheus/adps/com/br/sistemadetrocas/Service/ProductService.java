@@ -1,23 +1,23 @@
-package matheus.adps.com.br.sistemadetrocas.Service;
+package matheus.adps.com.br.sistemadetrocas.service;
 
 import java.util.List;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
-import matheus.adps.com.br.sistemadetrocas.Model.Product;
+import matheus.adps.com.br.sistemadetrocas.dto.ProductDTO;
+import matheus.adps.com.br.sistemadetrocas.model.Product;
 
 public interface ProductService 
 {
-	public void create(
+	Product create(
 			ProductDTO productDTO);
 	
-	public List<Product> getAll();
+	List<Product> getAll();
 	
-	public Product getByCode(
+	Product getByCode(
 			String code);
 	
-	public void update(
+	Product updateByCode(
 			ProductDTO productDTO);
 	
-	public void delete(
+	String delete(
 			String code);
 }

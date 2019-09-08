@@ -1,16 +1,16 @@
-package matheus.adps.com.br.sistemadetrocas.ServiceImpl;
+package matheus.adps.com.br.sistemadetrocas.serviceimpl;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.ProductCategoryDTO;
-import matheus.adps.com.br.sistemadetrocas.Exception.ProductCategoryDuplicateException;
-import matheus.adps.com.br.sistemadetrocas.Exception.ProductCategoryNotFoundException;
-import matheus.adps.com.br.sistemadetrocas.Model.ProductCategory;
-import matheus.adps.com.br.sistemadetrocas.Repository.ProductCategoryRepository;
-import matheus.adps.com.br.sistemadetrocas.Service.ProductCategoryService;
+import matheus.adps.com.br.sistemadetrocas.dto.ProductCategoryDTO;
+import matheus.adps.com.br.sistemadetrocas.exception.ProductCategoryDuplicateException;
+import matheus.adps.com.br.sistemadetrocas.exception.ProductCategoryNotFoundException;
+import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
+import matheus.adps.com.br.sistemadetrocas.repository.ProductCategoryRepository;
+import matheus.adps.com.br.sistemadetrocas.service.ProductCategoryService;
 
 @Service
 public class ProductCategoryServiceImpl 
@@ -21,11 +21,11 @@ public class ProductCategoryServiceImpl
 	private ProductCategoryRepository pcRepository;
 	
 	@Override
-	public void create(
+	public ProductCategory create(
 			final ProductCategoryDTO productCategoryDTO)
 	{
-		final ProductCategory retrievedProductCategory = getByCode(productCategoryDTO.getCode());
-		if ( productCategoryDTO.getCode().equals(retrievedProductCategory.getCode()) ) {
+		final Optional<ProductCategory> optionalProductCategory = pcRepository.findByCode(productCategoryDTO.getCode());		
+		if ( optionalProductCategory.isPresent() ) {
 			throw new ProductCategoryDuplicateException("Categoria de Produto já cadastrada");
 		}
 		final ProductCategory productCategory = new ProductCategory
@@ -35,7 +35,7 @@ public class ProductCategoryServiceImpl
 				productCategoryDTO.getFtsubcategory(),
 				productCategoryDTO.getSdsubcategory()
 			);
-		pcRepository.save(productCategory);
+		return pcRepository.save(productCategory);
 	}
 
 	@Override

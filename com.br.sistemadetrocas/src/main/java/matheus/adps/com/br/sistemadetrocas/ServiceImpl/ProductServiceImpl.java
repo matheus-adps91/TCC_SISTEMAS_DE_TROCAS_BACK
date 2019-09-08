@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.ServiceImpl;
+package matheus.adps.com.br.sistemadetrocas.serviceimpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,12 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
-import matheus.adps.com.br.sistemadetrocas.Exception.ProductDuplicate;
-import matheus.adps.com.br.sistemadetrocas.Exception.ProductNotFoundException;
-import matheus.adps.com.br.sistemadetrocas.Model.Product;
-import matheus.adps.com.br.sistemadetrocas.Repository.ProductRepository;
-import matheus.adps.com.br.sistemadetrocas.Service.ProductService;
+import matheus.adps.com.br.sistemadetrocas.dto.ProductDTO;
+import matheus.adps.com.br.sistemadetrocas.exception.ProductDuplicate;
+import matheus.adps.com.br.sistemadetrocas.exception.ProductNotFoundException;
+import matheus.adps.com.br.sistemadetrocas.model.Product;
+import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
+import matheus.adps.com.br.sistemadetrocas.repository.ProductRepository;
+import matheus.adps.com.br.sistemadetrocas.service.ProductService;
 
 @Service
 public class ProductServiceImpl 
@@ -21,28 +22,29 @@ public class ProductServiceImpl
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private ProductCategoryServiceImpl productCategoryService;
+	
 	@Override
-	public void create(
+	public Product create(
 			final ProductDTO productDTO) 
 	{
-		final Product retrievedProduct = getByCode(productDTO.getCode());
-		if ( productDTO.getCode().equals(retrievedProduct.getCode())) {
+		final Optional<Product> optionalProduct = productRepository.findByCode(productDTO.getCode());
+		if (optionalProduct.isPresent()) {
 			throw new ProductDuplicate("Produto já cadastrado");
 		}
-		final Product product = new Product
-			(
+		final ProductCategory productCategory = productCategoryService.getByCode(productDTO.getCategoryCode());
+		final Product product = new Product(
 				productDTO.getCode(),
 				productDTO.getName(),
 				productDTO.getDescription(),
-				productDTO.getProductCategory()
-			);
-		productRepository.save(product);
+				productCategory);
+		return productRepository.save(product);
 	}
 
 	@Override
 	public List<Product> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findAll();
 	}
 
 	@Override
@@ -57,14 +59,23 @@ public class ProductServiceImpl
 	}
 
 	@Override
-	public void update(ProductDTO productDTO) {
-		// TODO Auto-generated method stub
-
+	public Product updateByCode(
+			final ProductDTO productDTO) 
+	{
+		final Product product = getByCode(productDTO.getCode());
+		final ProductCategory productCategory = productCategoryService.getByCode(productDTO.getCategoryCode());
+		product.setName(productDTO.getName());
+		product.setDescription(productDTO.getDescription());		
+		product.setProductCategory(productCategory);
+		return productRepository.save(product);
 	}
 
 	@Override
-	public void delete(String code) {
-		// TODO Auto-generated method stub
-
+	public String delete(
+			final String code) 
+	{
+		final Product product = getByCode(code);
+		productRepository.delete(product);
+		return "produto deletado - PROVISÓRIO";
 	}
 }

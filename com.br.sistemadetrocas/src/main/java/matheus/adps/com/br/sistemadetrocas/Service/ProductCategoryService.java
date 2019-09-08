@@ -1,16 +1,16 @@
-package matheus.adps.com.br.sistemadetrocas.Service;
+package matheus.adps.com.br.sistemadetrocas.service;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.ProductCategoryDTO;
-import matheus.adps.com.br.sistemadetrocas.Model.ProductCategory;
+import matheus.adps.com.br.sistemadetrocas.dto.ProductCategoryDTO;
+import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
 
 public interface ProductCategoryService
 {
-	public void create(
+	ProductCategory create(
 			ProductCategoryDTO productCategoryDTO);
 	
-	public ProductCategory getByCode(
+	ProductCategory getByCode(
 			String code);
 	
-	public void update(
+	void update(
 			ProductCategoryDTO productCategoryDTO);
 }

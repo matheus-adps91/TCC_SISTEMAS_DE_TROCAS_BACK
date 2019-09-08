@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.Model;
+package matheus.adps.com.br.sistemadetrocas.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

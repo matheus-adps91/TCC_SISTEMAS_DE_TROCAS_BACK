@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.Controller;
+package matheus.adps.com.br.sistemadetrocas.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.UserSignupDTO;
-import matheus.adps.com.br.sistemadetrocas.DTO.UserUpdateDTO;
-import matheus.adps.com.br.sistemadetrocas.Model.User;
-import matheus.adps.com.br.sistemadetrocas.Service.UserService;
+import matheus.adps.com.br.sistemadetrocas.dto.UserSignupDTO;
+import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
+import matheus.adps.com.br.sistemadetrocas.model.User;
+import matheus.adps.com.br.sistemadetrocas.service.UserService;
 
 @RestController
 @RequestMapping( "/user")

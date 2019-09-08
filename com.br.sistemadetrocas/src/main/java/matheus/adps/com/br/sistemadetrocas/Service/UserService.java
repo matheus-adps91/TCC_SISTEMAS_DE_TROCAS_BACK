@@ -1,17 +1,17 @@
-package matheus.adps.com.br.sistemadetrocas.Service;
+package matheus.adps.com.br.sistemadetrocas.service;
 
-import matheus.adps.com.br.sistemadetrocas.DTO.UserSignupDTO;
-import matheus.adps.com.br.sistemadetrocas.DTO.UserUpdateDTO;
-import matheus.adps.com.br.sistemadetrocas.Model.User;
+import matheus.adps.com.br.sistemadetrocas.dto.UserSignupDTO;
+import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
+import matheus.adps.com.br.sistemadetrocas.model.User;
 
 public interface UserService
 {
-	public void create(
+	void create(
 			UserSignupDTO userSignupDTO);
 	
-	public User getByEmail(
+	User getByEmail(
 			String email);
 	
-	public void update(
+	void update(
 			UserUpdateDTO userUpdateDTO);
 }
