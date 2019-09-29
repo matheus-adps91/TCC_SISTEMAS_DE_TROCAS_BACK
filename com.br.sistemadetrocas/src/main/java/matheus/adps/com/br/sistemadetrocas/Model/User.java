@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -13,8 +14,9 @@ import com.sun.istack.NotNull;
 @Table( name = "user_entity", schema = "public" )
 public class User 
 {
-	@Id	
-	@GeneratedValue( strategy = GenerationType.SEQUENCE)
+	@Id
+	@SequenceGenerator( name = "gen_user_seq", sequenceName = "user_seq", allocationSize = 1)
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "gen_user_seq")
 	private Integer id;
 	
 	@NotNull
@@ -38,7 +40,7 @@ public class User
 	private String address;
 	
 	@Column
-	private String complement;
+	private String houseNumber;
 	
 	@Column
 	private String state;
@@ -50,6 +52,10 @@ public class User
 	@NotNull
 	@Column
 	private int zipCode;
+	
+	@NotNull
+	@Column
+	private boolean compliance;
 
 	public User() {
 	}
@@ -60,20 +66,63 @@ public class User
 			String fullName, 
 			String gender, 
 			String address, 
-			String complement,
+			String houseNumber,
 			String state, 
 			String city, 
-			int zipCode) 
+			int zipCode, 
+			boolean compliance) 
 	{
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
 		this.gender = gender;
 		this.address = address;
-		this.complement = complement;
+		this.houseNumber = houseNumber;
 		this.state = state;
 		this.city = city;
 		this.zipCode = zipCode;
+		this.compliance = compliance;
+	}
+
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getHouseNumber() {
+		return houseNumber;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public int getZipCode() {
+		return zipCode;
+	}
+
+	public boolean isCompliance() {
+		return compliance;
 	}
 
 	public void setId(Integer id) {
@@ -100,8 +149,8 @@ public class User
 		this.address = address;
 	}
 
-	public void setComplement(String complement) {
-		this.complement = complement;
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
 
 	public void setState(String state) {

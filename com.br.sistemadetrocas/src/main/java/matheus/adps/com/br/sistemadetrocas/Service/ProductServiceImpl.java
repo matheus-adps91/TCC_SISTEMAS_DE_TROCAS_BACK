@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.serviceimpl;
+package matheus.adps.com.br.sistemadetrocas.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +12,6 @@ import matheus.adps.com.br.sistemadetrocas.exception.ProductNotFoundException;
 import matheus.adps.com.br.sistemadetrocas.model.Product;
 import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
 import matheus.adps.com.br.sistemadetrocas.repository.ProductRepository;
-import matheus.adps.com.br.sistemadetrocas.service.ProductService;
 
 @Service
 public class ProductServiceImpl 

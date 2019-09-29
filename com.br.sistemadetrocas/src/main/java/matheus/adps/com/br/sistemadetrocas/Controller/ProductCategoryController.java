@@ -3,6 +3,7 @@ package matheus.adps.com.br.sistemadetrocas.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import matheus.adps.com.br.sistemadetrocas.dto.ProductCategoryDTO;
 import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
 import matheus.adps.com.br.sistemadetrocas.service.ProductCategoryService;
 
+@CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
 @RequestMapping( "/product-category" )
 public class ProductCategoryController

@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.serviceimpl;
+package matheus.adps.com.br.sistemadetrocas.service;
 
 import java.util.Optional;
 
@@ -10,7 +10,6 @@ import matheus.adps.com.br.sistemadetrocas.exception.ProductCategoryDuplicateExc
 import matheus.adps.com.br.sistemadetrocas.exception.ProductCategoryNotFoundException;
 import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
 import matheus.adps.com.br.sistemadetrocas.repository.ProductCategoryRepository;
-import matheus.adps.com.br.sistemadetrocas.service.ProductCategoryService;
 
 @Service
 public class ProductCategoryServiceImpl 

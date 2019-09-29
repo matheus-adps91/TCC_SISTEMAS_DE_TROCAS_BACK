@@ -7,7 +7,8 @@ public class ProductDuplicate
 	private static final long serialVersionUID = 1L;
 
 	public ProductDuplicate(
-			String message) {
+			final String message) 
+	{
 		super(message);
 	}
 }

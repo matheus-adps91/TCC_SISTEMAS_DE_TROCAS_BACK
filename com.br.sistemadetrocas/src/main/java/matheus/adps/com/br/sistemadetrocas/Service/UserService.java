@@ -6,12 +6,18 @@ import matheus.adps.com.br.sistemadetrocas.model.User;
 
 public interface UserService
 {
-	void create(
+	User create(
 			UserSignupDTO userSignupDTO);
 	
 	User getByEmail(
 			String email);
 	
-	void update(
+	String update(
 			UserUpdateDTO userUpdateDTO);
+	
+	String updatePassword(
+			String newPassword);
+	
+	String cryptographyPassword(
+			String password); 
 }

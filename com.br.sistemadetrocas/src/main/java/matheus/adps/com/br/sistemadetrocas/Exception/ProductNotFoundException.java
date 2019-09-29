@@ -7,10 +7,8 @@ public class ProductNotFoundException
 	private static final long serialVersionUID = 1L;
 
 	public ProductNotFoundException(
-			String message)
+			final String message)
 	{
 		super(message);	
 	}
-
-	
 }

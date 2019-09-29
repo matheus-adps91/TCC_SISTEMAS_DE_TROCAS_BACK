@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.enums;
+package matheus.adps.com.br.sistemadetrocas.model;
 public enum States {
 	
 	 AC("Acre"),

@@ -7,7 +7,8 @@ public class ProductCategoryDuplicateException
 	private static final long serialVersionUID = 1L;
 
 	public ProductCategoryDuplicateException(
-			String message) {
+			final String message) 
+	{
 		super(message);
 	}	
 }

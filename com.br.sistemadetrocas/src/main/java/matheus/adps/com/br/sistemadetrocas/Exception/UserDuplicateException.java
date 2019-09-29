@@ -7,7 +7,8 @@ public class UserDuplicateException
 	private static final long serialVersionUID = 1L;
 
 	public UserDuplicateException(
-			final String message) {
+			final String message) 
+	{
 		super(message);
 	}
 }

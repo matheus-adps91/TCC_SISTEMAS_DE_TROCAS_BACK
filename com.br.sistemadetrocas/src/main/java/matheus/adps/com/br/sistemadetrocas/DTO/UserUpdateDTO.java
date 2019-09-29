@@ -17,7 +17,7 @@ public class UserUpdateDTO
 	private String address;
 	
 	@JsonProperty
-	private String complement;
+	private String houseNumber;
 	
 	@JsonProperty
 	private String state;
@@ -36,7 +36,7 @@ public class UserUpdateDTO
 			String fullName, 
 			String gender, 
 			String address, 
-			String complement, 
+			String houseNumber, 
 			String state, 
 			String city,
 			int zipCode)
@@ -45,7 +45,7 @@ public class UserUpdateDTO
 		this.fullName = fullName;
 		this.gender = gender;
 		this.address = address;
-		this.complement = complement;
+		this.houseNumber = houseNumber;
 		this.state = state;
 		this.city = city;
 		this.zipCode = zipCode;
@@ -67,8 +67,8 @@ public class UserUpdateDTO
 		return address;
 	}
 
-	public String getComplement() {
-		return complement;
+	public String getHouseNumber() {
+		return houseNumber;
 	}
 
 	public String getState() {

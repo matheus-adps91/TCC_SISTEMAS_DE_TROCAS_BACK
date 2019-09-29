@@ -8,7 +8,6 @@
 
 	<changeSet id="1" author="matheus.silva">
 	
-		<createSequence sequenceName="hibernate_sequence" />
 		<createSequence sequenceName="user_seq" />
 		
 		<createTable tableName="user_entity">
@@ -16,10 +15,10 @@
 				valueSequenceNext="user_seq">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="email" type="varchar(25)">
+			<column name="email" type="varchar(30)">
 				<constraints nullable="false" unique="true"/>
 			</column>
-			<column name="password" type="varchar(6)">
+			<column name="password" type="varchar(255)">
 				<constraints nullable="false" />
 			</column>
 			<column name="full_name" type="varchar(60)">
@@ -28,11 +27,11 @@
 			<column name="gender" type="varchar(9)">
 				<constraints nullable="false" />
 			</column>
-			<column name="address" type="varchar(25)">
+			<column name="address" type="varchar(30)">
 				<constraints nullable="false" />
 			</column>
-			<column name="complement" type="varchar(15)">
-				<constraints nullable="true" />
+			<column name="house_number" type="varchar(5)">
+				<constraints nullable="false" />
 			</column>
 			<column name="state" type="varchar(15)">
 				<constraints nullable="false" />
@@ -41,7 +40,10 @@
 				<constraints nullable="false" />
 			</column>
 			<column name="zip_code" type="int">
-				<constraints nullable="false" unique="true" />
+				<constraints nullable="false" />
+			</column>
+			<column name="compliance" type="boolean">
+				<constraints nullable="false" />
 			</column>
 		</createTable>
 	</changeSet>
@@ -98,6 +100,36 @@
 			constraintName="fk_product_category_product" 
 			referencedTableName="product_category_entity" referencedColumnNames="id"
 			baseTableName="product_entity" baseColumnNames="id_product_category" />
+			
+	</changeSet>
+	
+	<changeSet id="4" author="matheus.silva">
+	
+		<createSequence sequenceName="user_session_seq"/>
+	
+		<createTable tableName="user_session_entity">
+			<column name="id" type="int" 
+				valueSequenceNext="user_session_seq">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="login_date" type="timestamp">
+				<constraints nullable="false"/>
+			</column>
+			<column name="expiration_date" type="timestamp">
+				<constraints nullable="false"/>
+			</column>
+			<column name="token" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="id_user" type="int">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>	
+		
+		<addForeignKeyConstraint 
+			constraintName="fk_user_session_user"
+			referencedTableName="user_entity" referencedColumnNames="id"
+			baseTableName="user_session_entity" baseColumnNames="id_user" />
 			
 	</changeSet>
 	

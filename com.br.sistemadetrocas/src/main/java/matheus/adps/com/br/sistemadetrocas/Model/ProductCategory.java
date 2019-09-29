@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -14,7 +15,8 @@ import com.sun.istack.NotNull;
 public class ProductCategory
 {
 	@Id
-	@GeneratedValue( strategy = GenerationType.SEQUENCE )
+	@SequenceGenerator( name= "gen_product_category_seq", sequenceName = "product_category_seq", allocationSize = 1)
+	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "gen_product_category_seq" )
 	private Integer id;
 	
 	@NotNull
@@ -50,6 +52,18 @@ public class ProductCategory
 	
 	public String getCode() {
 		return code;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public String getFtsubcategory() {
+		return ftsubcategory;
+	}
+
+	public String getSdsubcategory() {
+		return sdsubcategory;
 	}
 
 	public void setCode(String code) {

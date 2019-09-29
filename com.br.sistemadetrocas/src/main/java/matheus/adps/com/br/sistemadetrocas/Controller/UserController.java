@@ -3,8 +3,10 @@ package matheus.adps.com.br.sistemadetrocas.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,31 +17,39 @@ import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
 import matheus.adps.com.br.sistemadetrocas.model.User;
 import matheus.adps.com.br.sistemadetrocas.service.UserService;
 
+@CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
-@RequestMapping( "/user")
+@RequestMapping( "/user" )
 public class UserController
 {
 	@Autowired
 	private UserService userService;
-
+	
 	@PostMapping( path = "/create" )
-	public void create(
+	public ResponseEntity<User> create(
 			@RequestBody final UserSignupDTO userSignupDTO)
 	{
-		userService.create(userSignupDTO);
+		return new ResponseEntity<>(userService.create(userSignupDTO), HttpStatus.CREATED);
 	}
 	
-	@GetMapping( path = "/get" )
-	public ResponseEntity<User> get(
-			@RequestBody final String email)
+	@GetMapping( path = "/get-by-email/{email}" )
+	public ResponseEntity<User> getByEmail(
+			@PathVariable final String email)
 	{
-		return new ResponseEntity<>(userService.getByEmail(email),HttpStatus.OK);
+		return new ResponseEntity<>(userService.getByEmail(email), HttpStatus.OK);
 	}
 	
 	@PatchMapping( path = "/update" )
-	public void update(
+	public ResponseEntity<String> update(
 			@RequestBody final UserUpdateDTO userUpdateDTO)
 	{
-		userService.update(userUpdateDTO);
+		return new ResponseEntity<>(userService.update(userUpdateDTO), HttpStatus.OK);
+	}
+	
+	@PatchMapping( path = "/update-password" )
+	public ResponseEntity<String> updatePassword(
+			@RequestBody final String newPassword)
+	{
+		return new ResponseEntity<>(userService.updatePassword(newPassword), HttpStatus.OK);
 	}
 }

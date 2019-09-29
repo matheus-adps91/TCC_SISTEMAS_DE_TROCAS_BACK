@@ -7,6 +7,8 @@ public class ProductCategoryNotFoundException
 	private static final long serialVersionUID = 1L;
 
 	public ProductCategoryNotFoundException(
-			String message) {
+			final String msg) 
+	{
+		super(msg);
 	}	
 }

@@ -20,7 +20,7 @@ public class UserSignupDTO
 	private String address;
 	
 	@JsonProperty
-	private String complement;
+	private String houseNumber;
 	
 	@JsonProperty
 	private String state;
@@ -30,30 +30,35 @@ public class UserSignupDTO
 	
 	@JsonProperty
 	private int zipCode;
+	
+	@JsonProperty
+	private boolean compliance;
 
 	public UserSignupDTO() {			
 	}
 
 	public UserSignupDTO(
-			String email, 
-			String password, 
-			String fullName, 
-			String gender, 
-			String address,
-			String complement, 
-			String state, 
-			String city, 
-			int zipCode) 
+			final String email, 
+			final String password, 
+			final String fullName, 
+			final String gender, 
+			final String address, 
+			final String number,
+			final String state, 
+			final String city, 
+			final int zipCode, 
+			final boolean compliance)
 	{
 		this.email = email;
 		this.password = password;
 		this.fullName = fullName;
 		this.gender = gender;
 		this.address = address;
-		this.complement = complement;
+		this.houseNumber = number;
 		this.state = state;
 		this.city = city;
 		this.zipCode = zipCode;
+		this.compliance = compliance;
 	}
 
 	public String getEmail() {
@@ -76,8 +81,8 @@ public class UserSignupDTO
 		return address;
 	}
 
-	public String getComplement() {
-		return complement;
+	public String getHouseNumber() {
+		return houseNumber;
 	}
 
 	public String getState() {
@@ -90,5 +95,9 @@ public class UserSignupDTO
 
 	public int getZipCode() {
 		return zipCode;
+	}
+
+	public boolean getCompliance() {
+		return compliance;
 	}
 }
