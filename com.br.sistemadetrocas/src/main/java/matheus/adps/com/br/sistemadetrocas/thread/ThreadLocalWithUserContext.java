@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemasdetrocas.thread;
+package matheus.adps.com.br.sistemadetrocas.thread;
 
 import matheus.adps.com.br.sistemadetrocas.model.User;
 

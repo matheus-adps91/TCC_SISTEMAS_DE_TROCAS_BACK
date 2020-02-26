@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import matheus.adps.com.br.sistemadetrocas.dto.LoginUserDTO;
+import matheus.adps.com.br.sistemadetrocas.dto.LoginUserReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.dto.LogoutUserReturnDTO;
 import matheus.adps.com.br.sistemadetrocas.exception.InvalidPasswordException;
+import matheus.adps.com.br.sistemadetrocas.model.Session;
 import matheus.adps.com.br.sistemadetrocas.model.User;
 
 @Service
@@ -19,7 +22,7 @@ public class AuthServiceImpl
 	private SessionService sessionService;
 
 	@Override
-	public String login(
+	public LoginUserReturnDTO login(
 			final LoginUserDTO loginUserDTO) 
 	{	
 		final User user = userService.getByEmail(loginUserDTO.getEmail());
@@ -27,14 +30,18 @@ public class AuthServiceImpl
 		if ( !crypthografiedPass.equals(user.getPassword() ) ) {
 			throw new InvalidPasswordException(
 					String.format("Palavra passe errada para o login: ", user.getEmail()));
-		}		
-		return sessionService.createSession(user);
+		}
+		final Session openedSession = sessionService.createSession(user);
+		final LoginUserReturnDTO loginReturn = new LoginUserReturnDTO(true, openedSession.getToken());
+		return loginReturn;
 	}
 
 	@Override
-	public String logout(
+	public LogoutUserReturnDTO logout(
 			final String token) 
 	{
-		return sessionService.finalizeSession(token);
+		final String message = sessionService.finalizeSession(token);
+		final LogoutUserReturnDTO logoutReturn = new LogoutUserReturnDTO(true, message);
+		return logoutReturn;
 	}
 }

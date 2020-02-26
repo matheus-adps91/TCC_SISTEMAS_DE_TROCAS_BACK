@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - App",
+            "request": "launch",
+            "mainClass": "matheus.adps.com.br.sistemadetrocas.App",
+            "projectName": "com.br.sistemadetrocas"
+        }
+    ]
+}

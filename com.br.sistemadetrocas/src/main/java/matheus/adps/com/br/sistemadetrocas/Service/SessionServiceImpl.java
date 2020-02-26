@@ -20,20 +20,19 @@ public class SessionServiceImpl
 	private SessionRepository sessionRepository;
 	
 	@Override
-	public String createSession(
+	public Session createSession(
 			final User user ) 
 	{
 		final LocalDateTime currentDateTime = LocalDateTime.now();
 		final LocalDateTime expirationDateTime = evaluateTimeSession( currentDateTime, 60 );
-		final String token = generateToken(user.getEmail(), currentDateTime);
+		final String token = generateToken(currentDateTime);
 		final Session session = new Session(
 				currentDateTime,
 				expirationDateTime,
 				token,
 				user
-		);
-		sessionRepository.save(session);
-		return session.getToken();
+		);		
+		return sessionRepository.save(session); 
 	}
 
 	@Override
@@ -75,9 +74,8 @@ public class SessionServiceImpl
 	}
 	
 	private String generateToken(
-			String email, 
 			LocalDateTime currentDateTime) 
 	{		
-		return Integer.toString(email.hashCode() ) + Integer.toString(currentDateTime.hashCode());
+		return Integer.toString(Math.abs(currentDateTime.hashCode()));
 	}
 }

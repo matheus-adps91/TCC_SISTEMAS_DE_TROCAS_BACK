@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import matheus.adps.com.br.sistemadetrocas.dto.LoginUserDTO;
+import matheus.adps.com.br.sistemadetrocas.dto.LoginUserReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.dto.LogoutUserReturnDTO;
 import matheus.adps.com.br.sistemadetrocas.service.AuthService;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
@@ -24,14 +26,14 @@ public class AuthController
 	private AuthService authService;
 	
 	@PostMapping( "/login" )
-	public ResponseEntity<String> login(
+	public ResponseEntity<LoginUserReturnDTO> login(
 			@RequestBody @Valid final LoginUserDTO loginUserDTO )
 	{
 		return new ResponseEntity<>(authService.login(loginUserDTO), HttpStatus.CREATED );
 	}
 	
 	@PostMapping( "/logout" )
-	public ResponseEntity<String> logout(
+	public ResponseEntity<LogoutUserReturnDTO> logout(
 			@RequestHeader( name = "token" ) final String token )
 	{
 		return new ResponseEntity<>(authService.logout(token), HttpStatus.OK );

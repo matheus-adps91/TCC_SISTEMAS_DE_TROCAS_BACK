@@ -5,7 +5,7 @@ import matheus.adps.com.br.sistemadetrocas.model.User;
 
 public interface SessionService 
 {
-	String createSession(
+	Session createSession(
 			User user);
 	
 	Session getSessionByToken(

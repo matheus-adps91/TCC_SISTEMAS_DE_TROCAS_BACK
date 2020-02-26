@@ -15,7 +15,7 @@ import matheus.adps.com.br.sistemadetrocas.exception.UserDuplicateException;
 import matheus.adps.com.br.sistemadetrocas.exception.UserNotFoundException;
 import matheus.adps.com.br.sistemadetrocas.model.User;
 import matheus.adps.com.br.sistemadetrocas.repository.UserRepository;
-import matheus.adps.com.br.sistemasdetrocas.thread.ThreadLocalWithUserContext;
+import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 
 @Service
 public class UserServiceImpl 
