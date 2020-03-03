@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.dto;
+package matheus.adps.com.br.sistemadetrocas.dtoReturn;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,19 +6,14 @@ public class LogoutUserReturnDTO
 {
 	@JsonProperty
 	private boolean success;
-	
-	@JsonProperty
-	private String message;
 
 	public LogoutUserReturnDTO() 
 	{
 	}
 
 	public LogoutUserReturnDTO(
-			boolean success, 
-			String message) 
+			final boolean success) 
 	{
 		this.success = success;
-		this.message = message;
 	}
 }

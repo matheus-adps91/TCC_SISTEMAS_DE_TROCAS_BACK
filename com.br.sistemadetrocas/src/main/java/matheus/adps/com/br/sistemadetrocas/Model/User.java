@@ -51,7 +51,10 @@ public class User
 	
 	@NotNull
 	@Column
-	private int zipCode;
+	private String zipCode;
+	
+	@Column
+	private String complement;
 	
 	@NotNull
 	@Column
@@ -61,16 +64,17 @@ public class User
 	}
 
 	public User(
-			String email, 
-			String password, 
-			String fullName, 
-			String gender, 
-			String address, 
-			String houseNumber,
-			String state, 
-			String city, 
-			int zipCode, 
-			boolean compliance) 
+			final String email, 
+			final String password, 
+			final String fullName, 
+			final String gender, 
+			final String address, 
+			final String houseNumber,
+			final String state, 
+			final String city, 
+			final String zipCode,
+			final String complement,
+			final boolean compliance) 
 	{
 		this.email = email;
 		this.password = password;
@@ -81,10 +85,20 @@ public class User
 		this.state = state;
 		this.city = city;
 		this.zipCode = zipCode;
+		this.complement = complement;
 		this.compliance = compliance;
 	}
 
 	
+	public String getComplement() {
+		return complement;
+	}
+
+	public void setComplement(
+			final String complement) {
+		this.complement = complement;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -117,7 +131,7 @@ public class User
 		return city;
 	}
 
-	public int getZipCode() {
+	public String getZipCode() {
 		return zipCode;
 	}
 
@@ -125,43 +139,52 @@ public class User
 		return compliance;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setEmail(String email) {
+	public void setEmail(
+			final String email) {
 		this.email = email;
 	}
 
-	public void setPassword(String password) {
+	public Integer getId() {
+		return id;
+	}
+	
+	public void setPassword(
+			final String password) {
 		this.password = password;
 	}
 
-	public void setFullName(String fullName) {
+	public void setFullName(
+			final String fullName) {
 		this.fullName = fullName;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(
+			final String gender) {
 		this.gender = gender;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(
+			final String address) {
 		this.address = address;
 	}
 
-	public void setHouseNumber(String houseNumber) {
+	public void setHouseNumber(
+			final String houseNumber) {
 		this.houseNumber = houseNumber;
 	}
 
-	public void setState(String state) {
+	public void setState(
+			final String state) {
 		this.state = state;
 	}
 
-	public void setCity(String city) {
+	public void setCity(
+			final String city) {
 		this.city = city;
 	}
 
-	public void setZipCode(int zipCode) {
+	public void setZipCode(
+			final String zipCode) {
 		this.zipCode = zipCode;
 	}
 }

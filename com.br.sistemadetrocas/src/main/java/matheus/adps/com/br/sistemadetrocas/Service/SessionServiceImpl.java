@@ -47,15 +47,14 @@ public class SessionServiceImpl
 	}
 
 	@Override
-	public String finalizeSession(
+	public boolean finalizeSession(
 			final String token ) 
 	{
 		final Session session = getSessionByToken(token);
 		final LocalDateTime currentDateTime = LocalDateTime.now();
 		session.setExpirationDate(currentDateTime);
 		sessionRepository.save(session);
-		// IMPLEMENTAR A FINALIZAÇÃO DO CARRINHO
-		return "Sessão finalizada";
+		return true;
 	}
 
 	@Override
@@ -69,7 +68,6 @@ public class SessionServiceImpl
 			LocalDateTime currDateTime, 
 			int minuteTimeSession) 
 	{
-		// VERIFICAR SE O TEMPO DE EXPIRAÇÃO JÁ ESTÁ VENCIDO
 		return currDateTime.plusMinutes(minuteTimeSession);
 	}
 	

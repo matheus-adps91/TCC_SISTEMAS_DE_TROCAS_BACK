@@ -11,7 +11,7 @@ public interface SessionService
 	Session getSessionByToken(
 		String token);
 	
-	String finalizeSession(
+	boolean finalizeSession(
 			String token);
 	
 	boolean isValidSession(

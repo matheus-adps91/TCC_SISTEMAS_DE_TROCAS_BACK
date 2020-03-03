@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import matheus.adps.com.br.sistemadetrocas.dto.UserSignupDTO;
 import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
+import matheus.adps.com.br.sistemadetrocas.dtoReturn.UserSignupReturnDTO;
 import matheus.adps.com.br.sistemadetrocas.model.User;
 import matheus.adps.com.br.sistemadetrocas.service.UserService;
+import matheus.adps.com.br.sistemadetrocas.wrapper.SignupCreateWrapper;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
@@ -26,10 +28,11 @@ public class UserController
 	private UserService userService;
 	
 	@PostMapping( path = "/create" )
-	public ResponseEntity<User> create(
+	public ResponseEntity<UserSignupReturnDTO> create(
 			@RequestBody final UserSignupDTO userSignupDTO)
 	{
-		return new ResponseEntity<>(userService.create(userSignupDTO), HttpStatus.CREATED);
+		final SignupCreateWrapper signup = userService.create(userSignupDTO);
+		return new ResponseEntity<>(signup.getReturnEntity() , signup.getHttpStatus());
 	}
 	
 	@GetMapping( path = "/get-by-email/{email}" )

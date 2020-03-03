@@ -1,14 +1,14 @@
 package matheus.adps.com.br.sistemadetrocas.service;
 
 import matheus.adps.com.br.sistemadetrocas.dto.LoginUserDTO;
-import matheus.adps.com.br.sistemadetrocas.dto.LoginUserReturnDTO;
-import matheus.adps.com.br.sistemadetrocas.dto.LogoutUserReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.wrapper.LoginWrapper;
+import matheus.adps.com.br.sistemadetrocas.wrapper.LogoutWrapper;
 
 public interface AuthService 
 {
-	LoginUserReturnDTO login(
+	LoginWrapper login(
 			LoginUserDTO loginUserDTO);
 	
-	LogoutUserReturnDTO logout(
+	LogoutWrapper logout(
 			String token);
 }

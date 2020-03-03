@@ -27,6 +27,9 @@ public class Session
 	@Column
 	private LocalDateTime loginDate;
 	
+	@Column
+	private LocalDateTime logoutDate;
+	
 	@NotNull
 	@Column
 	private LocalDateTime expirationDate;
@@ -44,16 +47,18 @@ public class Session
 	}
 
 	public Session(
-			@NotNull LocalDateTime loginDate, 
+			@NotNull LocalDateTime loginDate,
 			@NotNull LocalDateTime expirationDate,
 			@NotNull String token, 
 			@NotNull User user) 
 	{
 		this.loginDate = loginDate;
+		this.logoutDate = null;
 		this.expirationDate = expirationDate;
 		this.token = token;
 		this.user = user;
 	}
+
 
 	public int getId() {
 		return id;
@@ -63,6 +68,10 @@ public class Session
 		return loginDate;
 	}
 
+	public LocalDateTime getLogoutDate() {
+		return logoutDate;
+	}
+	
 	public LocalDateTime getExpirationDate() {
 		return expirationDate;
 	}
@@ -73,6 +82,11 @@ public class Session
 
 	public User getUser() {
 		return user;
+	}
+	
+	public void setLogoutDate(
+			final LocalDateTime logoutDate) {
+		this.logoutDate = logoutDate;
 	}
 	
 	public void setExpirationDate(

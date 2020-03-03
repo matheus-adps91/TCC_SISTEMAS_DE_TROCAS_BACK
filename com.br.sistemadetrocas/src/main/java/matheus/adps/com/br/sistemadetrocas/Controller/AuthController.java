@@ -3,7 +3,6 @@ package matheus.adps.com.br.sistemadetrocas.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import matheus.adps.com.br.sistemadetrocas.dto.LoginUserDTO;
-import matheus.adps.com.br.sistemadetrocas.dto.LoginUserReturnDTO;
-import matheus.adps.com.br.sistemadetrocas.dto.LogoutUserReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.dtoReturn.LoginUserReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.dtoReturn.LogoutUserReturnDTO;
 import matheus.adps.com.br.sistemadetrocas.service.AuthService;
+import matheus.adps.com.br.sistemadetrocas.wrapper.LoginWrapper;
+import matheus.adps.com.br.sistemadetrocas.wrapper.LogoutWrapper;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
@@ -29,13 +30,15 @@ public class AuthController
 	public ResponseEntity<LoginUserReturnDTO> login(
 			@RequestBody @Valid final LoginUserDTO loginUserDTO )
 	{
-		return new ResponseEntity<>(authService.login(loginUserDTO), HttpStatus.CREATED );
+		final LoginWrapper login = authService.login(loginUserDTO);
+		return new ResponseEntity<>(login.getLoginUserReturnDTO(), login.getHttpStatus());
 	}
 	
 	@PostMapping( "/logout" )
 	public ResponseEntity<LogoutUserReturnDTO> logout(
 			@RequestHeader( name = "token" ) final String token )
 	{
-		return new ResponseEntity<>(authService.logout(token), HttpStatus.OK );
+		final LogoutWrapper logout = authService.logout(token);
+		return new ResponseEntity<>( logout.getLogoutUserReturnDTO(), logout.getHttpStatus());
 	}
 }

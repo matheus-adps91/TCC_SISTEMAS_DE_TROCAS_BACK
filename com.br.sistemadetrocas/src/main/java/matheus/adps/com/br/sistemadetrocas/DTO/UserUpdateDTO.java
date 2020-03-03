@@ -26,7 +26,10 @@ public class UserUpdateDTO
 	private String city;
 	
 	@JsonProperty
-	private int zipCode;
+	private String zipCode;
+	
+	@JsonProperty
+	private String complement;
 
 	public UserUpdateDTO() {				
 	}
@@ -39,7 +42,8 @@ public class UserUpdateDTO
 			String houseNumber, 
 			String state, 
 			String city,
-			int zipCode)
+			String complement,
+			String zipCode)
 	{
 		this.email = email;
 		this.fullName = fullName;
@@ -48,6 +52,7 @@ public class UserUpdateDTO
 		this.houseNumber = houseNumber;
 		this.state = state;
 		this.city = city;
+		this.complement = complement;
 		this.zipCode = zipCode;
 	}
 
@@ -67,6 +72,10 @@ public class UserUpdateDTO
 		return address;
 	}
 
+	public String getComplement() {
+		return complement;
+	}
+
 	public String getHouseNumber() {
 		return houseNumber;
 	}
@@ -79,7 +88,7 @@ public class UserUpdateDTO
 		return city;
 	}
 
-	public int getZipCode() {
+	public String getZipCode() {
 		return zipCode;
 	}
 }

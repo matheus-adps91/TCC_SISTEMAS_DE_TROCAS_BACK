@@ -39,8 +39,11 @@
 			<column name="city" type="varchar(15)">
 				<constraints nullable="false" />
 			</column>
-			<column name="zip_code" type="int">
+			<column name="zip_code" type="varchar(8)">
 				<constraints nullable="false" />
+			</column>
+			<column name="complement" type="varchar(15)">
+				<constraints nullable="true" />
 			</column>
 			<column name="compliance" type="boolean">
 				<constraints nullable="false" />
@@ -49,61 +52,6 @@
 	</changeSet>
 	
 	<changeSet id="2" author="matheus.silva">
-		
-		<createSequence sequenceName="product_category_seq"/>
-		
-		<createTable tableName="product_category_entity">			
-			<column name="id" type="int"
-				valueSequenceNext="product_category_seq">
-				<constraints primaryKey="true" />
-			</column>
-			<column name="code" type="varchar(6)">
-				<constraints nullable="false" unique="true" />
-			</column>
-			<column name="category" type="varchar(15)">
-				<constraints nullable="false" />
-			</column>
-			<column name="ftsubcategory" type="varchar(15)">
-				<constraints nullable="false" />
-			</column>
-			<column name="sdsubcategory" type="varchar(15)">
-				<constraints nullable="true" />
-			</column>				
-		</createTable>
-		
-	</changeSet>
-	
-	<changeSet id="3" author="matheus.silva">
-	
-		<createSequence sequenceName="product_seq"/>
-		
-		<createTable tableName="product_entity">
-			<column name="id" type="int"
-				valueSequenceNext="product_seq">
-				<constraints primaryKey="true"/>
-			</column>
-			<column name="code" type="varchar(6)">
-				<constraints nullable="false" unique="true" />
-			</column>
-			<column name="name" type="varchar(25)">
-				<constraints nullable="false" unique="true" />
-			</column>
-			<column name="description" type="varchar(255)">
-				<constraints nullable="true"/>
-			</column>
-			<column name="id_product_category" type="int">
-				<constraints nullable="false"/>
-			</column>	
-		</createTable>
-		
-		<addForeignKeyConstraint 
-			constraintName="fk_product_category_product" 
-			referencedTableName="product_category_entity" referencedColumnNames="id"
-			baseTableName="product_entity" baseColumnNames="id_product_category" />
-			
-	</changeSet>
-	
-	<changeSet id="4" author="matheus.silva">
 	
 		<createSequence sequenceName="user_session_seq"/>
 	
@@ -114,6 +62,9 @@
 			</column>
 			<column name="login_date" type="timestamp">
 				<constraints nullable="false"/>
+			</column>
+			<column name="logout_date" type="timestamp">
+				<constraints nullable="true"/>
 			</column>
 			<column name="expiration_date" type="timestamp">
 				<constraints nullable="false"/>

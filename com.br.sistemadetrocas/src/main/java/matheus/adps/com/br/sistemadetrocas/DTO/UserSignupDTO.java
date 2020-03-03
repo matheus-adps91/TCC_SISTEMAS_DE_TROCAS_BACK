@@ -29,7 +29,10 @@ public class UserSignupDTO
 	private String city;
 	
 	@JsonProperty
-	private int zipCode;
+	private String zipCode;
+	
+	@JsonProperty
+	private String complement;
 	
 	@JsonProperty
 	private boolean compliance;
@@ -46,7 +49,8 @@ public class UserSignupDTO
 			final String number,
 			final String state, 
 			final String city, 
-			final int zipCode, 
+			final String zipCode,
+			final String complement,
 			final boolean compliance)
 	{
 		this.email = email;
@@ -93,8 +97,16 @@ public class UserSignupDTO
 		return city;
 	}
 
-	public int getZipCode() {
+	public String getZipCode() {
 		return zipCode;
+	}
+
+	public String getComplement() {
+		return complement;
+	}
+
+	public void setComplement(String complement) {
+		this.complement = complement;
 	}
 
 	public boolean getCompliance() {
