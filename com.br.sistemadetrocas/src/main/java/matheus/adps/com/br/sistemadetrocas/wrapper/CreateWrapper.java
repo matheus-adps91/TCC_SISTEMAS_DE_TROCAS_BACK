@@ -10,7 +10,7 @@ public abstract class CreateWrapper<T> {
 	public HttpStatus getHttpStatus() {
 		return httpStatus;
 	}
-	public T getReturnEntity() {
+	public T getEntity() {
 		return returnDTO;
 	}
 
