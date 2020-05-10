@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.model;
+package matheus.adps.com.br.sistemadetrocas.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,44 +21,50 @@ public class Product
     @SequenceGenerator( name = "gen_user_seq", sequenceName = "user_seq", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "gen_user_seq" )
     private Integer id;
-
+    
     @NotNull
     @Column( unique = true )
-    private String code;
-    
-    @NotNull
-    @Column
     private String name;
     
+    @NotNull
 	@Column
 	private String description;
 	
-	@ManyToOne
-	@JoinColumn( name = "id_product_category", foreignKey = @ForeignKey( name = "fk_product_category_product"), nullable = false)
-	private ProductCategory productCategory;
+    @NotNull
+	@Column
+	private String productCategory;
 
+    @NotNull
+    @Column
+    private String imagePath;
+	
+	@ManyToOne
+	@JoinColumn (name = "id_user", foreignKey = @ForeignKey( name = "fk_product_user"), nullable = false)
+	private User user;
+	
 	public Product() 
 	{
 	}
 
 	public Product(
-			String code, 
 			String name, 
 			String description, 
-			ProductCategory productCategory)
+			String productCategory,
+			String imagePath)
 	{
-		this.code = code;
 		this.name = name;
 		this.description = description;
 		this.productCategory = productCategory;
+		this.imagePath = imagePath;
+	}
+
+
+	public String getImageName() {
+		return imagePath;
 	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public String getCode() {
-		return code;
 	}
 
 	public String getName() {
@@ -69,7 +75,7 @@ public class Product
 		return description;
 	}
 
-	public ProductCategory getProductCategory() {
+	public String getProductCategory() {
 		return productCategory;
 	}
 
@@ -81,7 +87,11 @@ public class Product
 		this.description = description;
 	}
 
-	public void setProductCategory(ProductCategory productCategory) {
+	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
+	}
+	
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }

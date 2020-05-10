@@ -1,6 +1,6 @@
 package matheus.adps.com.br.sistemadetrocas.thread;
 
-import matheus.adps.com.br.sistemadetrocas.model.User;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
 
 public class ThreadLocalWithUserContext 
 {

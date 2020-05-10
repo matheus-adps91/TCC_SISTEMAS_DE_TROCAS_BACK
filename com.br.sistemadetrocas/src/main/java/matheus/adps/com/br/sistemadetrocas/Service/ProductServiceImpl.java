@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.service;
+package matheus.adps.com.br.sistemadetrocas.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,12 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import matheus.adps.com.br.sistemadetrocas.dto.ProductDTO;
-import matheus.adps.com.br.sistemadetrocas.exception.ProductDuplicate;
-import matheus.adps.com.br.sistemadetrocas.exception.ProductNotFoundException;
-import matheus.adps.com.br.sistemadetrocas.model.Product;
-import matheus.adps.com.br.sistemadetrocas.model.ProductCategory;
-import matheus.adps.com.br.sistemadetrocas.repository.ProductRepository;
+import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
+import matheus.adps.com.br.sistemadetrocas.Exception.ProductDuplicate;
+import matheus.adps.com.br.sistemadetrocas.Model.Product;
+import matheus.adps.com.br.sistemadetrocas.Repository.ProductRepository;
 
 @Service
 public class ProductServiceImpl 
@@ -21,23 +19,19 @@ public class ProductServiceImpl
 	@Autowired
 	private ProductRepository productRepository;
 	
-	@Autowired
-	private ProductCategoryServiceImpl productCategoryService;
-	
 	@Override
 	public Product create(
 			final ProductDTO productDTO) 
 	{
-		final Optional<Product> optionalProduct = productRepository.findByCode(productDTO.getCode());
+		final Optional<Product> optionalProduct = productRepository.findByName(productDTO.getName());
 		if (optionalProduct.isPresent()) {
 			throw new ProductDuplicate("Produto já cadastrado");
 		}
-		final ProductCategory productCategory = productCategoryService.getByCode(productDTO.getCategoryCode());
 		final Product product = new Product(
-				productDTO.getCode(),
 				productDTO.getName(),
 				productDTO.getDescription(),
-				productCategory);
+				productDTO.getProductCategory(),
+				productDTO.getImagePath());
 		return productRepository.save(product);
 	}
 
@@ -47,34 +41,33 @@ public class ProductServiceImpl
 	}
 
 	@Override
-	public Product getByCode(
-			final String code) 
+	public Product getByName(
+			final String name) 
 	{
-		final Optional<Product> optionalProduct = productRepository.findByCode(code);
+		final Optional<Product> optionalProduct = productRepository.findByName(name);
 		if ( ! optionalProduct.isPresent() ) {
-			throw new ProductNotFoundException("Produto não encontrado");
+			return null;
 		}
 		return optionalProduct.get();
 	}
 
 	@Override
-	public Product updateByCode(
+	public Product updateByName(
 			final ProductDTO productDTO) 
 	{
-		final Product product = getByCode(productDTO.getCode());
-		final ProductCategory productCategory = productCategoryService.getByCode(productDTO.getCategoryCode());
+		final Product product = getByName(productDTO.getName());		
 		product.setName(productDTO.getName());
 		product.setDescription(productDTO.getDescription());		
-		product.setProductCategory(productCategory);
+		product.setProductCategory(productDTO.getProductCategory());
 		return productRepository.save(product);
 	}
 
 	@Override
-	public String delete(
+	public boolean delete(
 			final String code) 
 	{
-		final Product product = getByCode(code);
+		final Product product = getByName(code);
 		productRepository.delete(product);
-		return "produto deletado - PROVISÓRIO";
+		return true;
 	}
 }

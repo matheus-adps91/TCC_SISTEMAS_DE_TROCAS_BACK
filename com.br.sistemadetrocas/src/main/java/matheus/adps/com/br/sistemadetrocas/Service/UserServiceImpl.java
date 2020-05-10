@@ -1,24 +1,22 @@
-package matheus.adps.com.br.sistemadetrocas.service;
+package matheus.adps.com.br.sistemadetrocas.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.google.common.hash.Hashing;
 
-import matheus.adps.com.br.sistemadetrocas.dto.UserSignupDTO;
-import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
-import matheus.adps.com.br.sistemadetrocas.dtoReturn.UserSignupReturnDTO;
-import matheus.adps.com.br.sistemadetrocas.exception.InvalidPasswordException;
-import matheus.adps.com.br.sistemadetrocas.exception.UserDuplicateException;
-import matheus.adps.com.br.sistemadetrocas.exception.UserNotFoundException;
-import matheus.adps.com.br.sistemadetrocas.model.User;
-import matheus.adps.com.br.sistemadetrocas.repository.UserRepository;
+import matheus.adps.com.br.sistemadetrocas.DTO.UserSignupDTO;
+import matheus.adps.com.br.sistemadetrocas.DTO.UserUpdateDTO;
+import matheus.adps.com.br.sistemadetrocas.Exception.InvalidPasswordException;
+import matheus.adps.com.br.sistemadetrocas.Exception.UserDuplicateException;
+import matheus.adps.com.br.sistemadetrocas.Exception.UserNotFoundException;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
+import matheus.adps.com.br.sistemadetrocas.Repository.UserRepository;
 import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
-import matheus.adps.com.br.sistemadetrocas.wrapper.SignupCreateWrapper;
+
 
 @Service
 public class UserServiceImpl 
@@ -29,13 +27,12 @@ public class UserServiceImpl
 	private UserRepository userRepository;
 
 	@Override
-	public SignupCreateWrapper create(
+	public User create(
 			final UserSignupDTO userSignupDTO)
 	{
 		final Optional<User> optionalUser = userRepository.findByEmail(userSignupDTO.getEmail() );
-		if ( optionalUser.isPresent() ) {
-			final UserSignupReturnDTO userNotSignup = new UserSignupReturnDTO(false);
-			return new SignupCreateWrapper(HttpStatus.UNAUTHORIZED, userNotSignup);
+		if ( optionalUser.isPresent() ) {			
+			throw new UserDuplicateException("Usuário já cadastrado");
 		}		 
 		final User user = new User
 			(
@@ -50,10 +47,8 @@ public class UserServiceImpl
 				userSignupDTO.getZipCode(),
 				userSignupDTO.getComplement(),
 				userSignupDTO.getCompliance()
-			);
-		userRepository.save(user);
-		final UserSignupReturnDTO userSignupReturnDTO = new UserSignupReturnDTO(true);
-		return new SignupCreateWrapper(HttpStatus.CREATED, userSignupReturnDTO); 
+			);		
+		return userRepository.save(user); 
 	}
 
 	@Override
@@ -102,4 +97,5 @@ public class UserServiceImpl
 	{
 		return Hashing.sha256().newHasher().putString(password, StandardCharsets.UTF_8).hash().toString();
 	}
+
 }

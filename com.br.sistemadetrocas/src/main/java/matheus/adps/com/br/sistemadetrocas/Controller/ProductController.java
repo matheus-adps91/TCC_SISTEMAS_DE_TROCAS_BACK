@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.controller;
+package matheus.adps.com.br.sistemadetrocas.Controller;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import matheus.adps.com.br.sistemadetrocas.dto.ProductDTO;
-import matheus.adps.com.br.sistemadetrocas.model.Product;
-import matheus.adps.com.br.sistemadetrocas.service.ProductService;
+import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
+import matheus.adps.com.br.sistemadetrocas.Model.Product;
+import matheus.adps.com.br.sistemadetrocas.Service.ProductService;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
@@ -31,32 +31,44 @@ public class ProductController
 	public ResponseEntity<Product> create(
 			@RequestBody final ProductDTO productDTO)
 	{
-		return new ResponseEntity<>(productService.create(productDTO), HttpStatus.CREATED);
+		final Product productCreated = productService.create(productDTO);
+		if ( productCreated == null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@GetMapping( path = "/get-by-code/{code}" )
+	@GetMapping( path = "/get-by-name/{name}" )
 	public ResponseEntity<Product> get(
-			@PathVariable final String code)
+			@PathVariable final String name)
 	{
-		return new ResponseEntity<>(productService.getByCode(code), HttpStatus.OK);
+		final Product productRecovered = productService.getByName(name);
+		if ( productRecovered == null ) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(productRecovered, HttpStatus.OK);
 	}
 	
 	@GetMapping(path = "/get-all" )
-	public List<Product> getAll()
+	public ResponseEntity<List<Product>> getAll()
 	{
-		return productService.getAll();				
+		final List<Product> allProducts = productService.getAll();
+		if ( allProducts == null || allProducts.size() == 0 ) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(allProducts, HttpStatus.OK);				
 	}
 	
 	
-	@PatchMapping( path = "/update-by-code" )
+	@PatchMapping( path = "/update-by-name" )
 	public ResponseEntity<Product> update(
 			@RequestBody final ProductDTO productDTO)
 	{
-		return new ResponseEntity<>(productService.updateByCode(productDTO), HttpStatus.OK);
+		return new ResponseEntity<>(productService.updateByName(productDTO), HttpStatus.OK);
 	}
 	
 	@DeleteMapping( path = "/delete-by-code/{code}" )
-	public String delete(
+	public boolean delete(
 			@PathVariable final String code )
 	{
 		return productService.delete(code);

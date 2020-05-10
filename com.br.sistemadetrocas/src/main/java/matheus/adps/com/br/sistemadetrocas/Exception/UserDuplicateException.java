@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.exception;
+package matheus.adps.com.br.sistemadetrocas.Exception;
 
 public class UserDuplicateException 
 	extends

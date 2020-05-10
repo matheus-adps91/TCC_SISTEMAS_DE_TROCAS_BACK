@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.dto;
+package matheus.adps.com.br.sistemadetrocas.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

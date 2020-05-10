@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.google.common.base.Strings;
 
-import matheus.adps.com.br.sistemadetrocas.model.Session;
-import matheus.adps.com.br.sistemadetrocas.service.SessionService;
+import matheus.adps.com.br.sistemadetrocas.Model.Session;
+import matheus.adps.com.br.sistemadetrocas.Service.SessionService;
 import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )

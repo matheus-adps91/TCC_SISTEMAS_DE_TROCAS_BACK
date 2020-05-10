@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.controller;
+package matheus.adps.com.br.sistemadetrocas.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,12 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import matheus.adps.com.br.sistemadetrocas.dto.UserSignupDTO;
-import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
-import matheus.adps.com.br.sistemadetrocas.dtoReturn.UserSignupReturnDTO;
-import matheus.adps.com.br.sistemadetrocas.model.User;
-import matheus.adps.com.br.sistemadetrocas.service.UserService;
-import matheus.adps.com.br.sistemadetrocas.wrapper.SignupCreateWrapper;
+import matheus.adps.com.br.sistemadetrocas.DTO.UserSignupDTO;
+import matheus.adps.com.br.sistemadetrocas.DTO.UserUpdateDTO;
+import matheus.adps.com.br.sistemadetrocas.DTOReturn.UserSignupReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
+import matheus.adps.com.br.sistemadetrocas.Service.UserService;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
@@ -31,8 +30,11 @@ public class UserController
 	public ResponseEntity<UserSignupReturnDTO> create(
 			@RequestBody final UserSignupDTO userSignupDTO)
 	{
-		final SignupCreateWrapper signup = userService.create(userSignupDTO);
-		return new ResponseEntity<>(signup.getEntity() , signup.getHttpStatus());
+		final  User userCreated = userService.create(userSignupDTO);
+		if ( userCreated == null ) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@GetMapping( path = "/get-by-email/{email}" )

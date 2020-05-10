@@ -1,15 +1,14 @@
-package matheus.adps.com.br.sistemadetrocas.service;
+package matheus.adps.com.br.sistemadetrocas.Service;
 
-import matheus.adps.com.br.sistemadetrocas.dto.UserSignupDTO;
-import matheus.adps.com.br.sistemadetrocas.dto.UserUpdateDTO;
-import matheus.adps.com.br.sistemadetrocas.model.User;
-import matheus.adps.com.br.sistemadetrocas.wrapper.SignupCreateWrapper;
+import matheus.adps.com.br.sistemadetrocas.DTO.UserSignupDTO;
+import matheus.adps.com.br.sistemadetrocas.DTO.UserUpdateDTO;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
 
 public interface UserService
 {
-	SignupCreateWrapper create(
+	User create(
 			UserSignupDTO userSignupDTO);
-	
+			
 	User getByEmail(
 			String email);
 	

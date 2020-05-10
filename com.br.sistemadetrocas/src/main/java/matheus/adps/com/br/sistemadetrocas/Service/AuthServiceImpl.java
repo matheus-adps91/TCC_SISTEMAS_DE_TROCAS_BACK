@@ -1,16 +1,13 @@
-package matheus.adps.com.br.sistemadetrocas.service;
+package matheus.adps.com.br.sistemadetrocas.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import matheus.adps.com.br.sistemadetrocas.dto.LoginUserDTO;
-import matheus.adps.com.br.sistemadetrocas.dtoReturn.LoginUserReturnDTO;
-import matheus.adps.com.br.sistemadetrocas.dtoReturn.LogoutUserReturnDTO;
-import matheus.adps.com.br.sistemadetrocas.model.Session;
-import matheus.adps.com.br.sistemadetrocas.model.User;
-import matheus.adps.com.br.sistemadetrocas.wrapper.LoginWrapper;
-import matheus.adps.com.br.sistemadetrocas.wrapper.LogoutWrapper;
+import matheus.adps.com.br.sistemadetrocas.DTO.LoginUserDTO;
+import matheus.adps.com.br.sistemadetrocas.DTOReturn.LoginUserReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.DTOReturn.LogoutUserReturnDTO;
+import matheus.adps.com.br.sistemadetrocas.Model.Session;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
 
 @Service
 public class AuthServiceImpl 
@@ -24,26 +21,27 @@ public class AuthServiceImpl
 	private SessionService sessionService;
 
 	@Override
-	public LoginWrapper login(
+	public LoginUserReturnDTO login(
 			final LoginUserDTO loginUserDTO) 
 	{	
 		final User user = userService.getByEmail(loginUserDTO.getEmail());
 		final String crypthografiedPass = userService.cryptographyPassword(loginUserDTO.getPassword());
 		if ( !crypthografiedPass.equals(user.getPassword() ) ) {
-			final LoginUserReturnDTO userNotAuth = new LoginUserReturnDTO(loginUserDTO.getEmail());
-			return new LoginWrapper(HttpStatus.UNAUTHORIZED, userNotAuth);
+			return null;
 		}
 		final Session openedSession = sessionService.createSession(user);
 		final LoginUserReturnDTO userAuth = new LoginUserReturnDTO(openedSession.getToken(), user.getEmail(), user.getFullName());
-		return new LoginWrapper(HttpStatus.CREATED, userAuth);
+		return userAuth;
 	}
 
 	@Override
-	public LogoutWrapper logout(
+	public LogoutUserReturnDTO logout(
 			final String token) 
 	{
 		final boolean finalizedSession = sessionService.finalizeSession(token);
-		final LogoutUserReturnDTO logoutReturn = new LogoutUserReturnDTO(true);
-		return new LogoutWrapper(HttpStatus.OK,logoutReturn);
+		if ( !finalizedSession) {
+			return new LogoutUserReturnDTO(false);
+		}
+		return new LogoutUserReturnDTO(true);
 	}
 }

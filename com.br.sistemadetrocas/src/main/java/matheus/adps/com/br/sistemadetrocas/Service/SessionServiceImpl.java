@@ -1,4 +1,4 @@
-package matheus.adps.com.br.sistemadetrocas.service;
+package matheus.adps.com.br.sistemadetrocas.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -6,10 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import matheus.adps.com.br.sistemadetrocas.exception.SessionNotFoundException;
-import matheus.adps.com.br.sistemadetrocas.model.Session;
-import matheus.adps.com.br.sistemadetrocas.model.User;
-import matheus.adps.com.br.sistemadetrocas.repository.SessionRepository;
+import matheus.adps.com.br.sistemadetrocas.Exception.SessionNotFoundException;
+import matheus.adps.com.br.sistemadetrocas.Model.Session;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
+import matheus.adps.com.br.sistemadetrocas.Repository.SessionRepository;
 
 @Service
 public class SessionServiceImpl 
@@ -52,8 +52,11 @@ public class SessionServiceImpl
 	{
 		final Session session = getSessionByToken(token);
 		final LocalDateTime currentDateTime = LocalDateTime.now();
-		session.setExpirationDate(currentDateTime);
-		sessionRepository.save(session);
+		session.setLogoutDate(currentDateTime);
+		final Session finalizedSession = sessionRepository.save(session);
+		if ( finalizedSession == null ) {
+			return false;
+		}
 		return true;
 	}
 

@@ -1,12 +1,9 @@
-package matheus.adps.com.br.sistemadetrocas.dto;
+package matheus.adps.com.br.sistemadetrocas.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductDTO 
-{
-	@JsonProperty
-	private String code;
-	
+{	
 	@JsonProperty
 	private String name;
 	
@@ -14,36 +11,40 @@ public class ProductDTO
 	private String description;
 	
 	@JsonProperty
-	private String categoryCode;
+	private String productCategory;
+	
+	@JsonProperty
+	private String imagePath;
 
 	public ProductDTO() {
 	}
 
 	public ProductDTO(
-			String code, 
 			String name, 
 			String description, 
-			String categoryCode) 
-	{
-		this.code = code;
+			String productCategory, 
+			String imagePath)
+	{		
 		this.name = name;
 		this.description = description;
-		this.categoryCode = categoryCode;
-	}
-
-	public String getCode() {
-		return code;
+		this.productCategory = productCategory;
+		this.imagePath = imagePath;
 	}
 
 	public String getName() {
 		return name;
 	}
-
+	
 	public String getDescription() {
 		return description;
 	}
-
-	public String getCategoryCode() {
-		return categoryCode;
+	
+	public String getProductCategory() {
+		return productCategory;
 	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
 }

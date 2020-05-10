@@ -1,7 +1,7 @@
-package matheus.adps.com.br.sistemadetrocas.service;
+package matheus.adps.com.br.sistemadetrocas.Service;
 
-import matheus.adps.com.br.sistemadetrocas.model.Session;
-import matheus.adps.com.br.sistemadetrocas.model.User;
+import matheus.adps.com.br.sistemadetrocas.Model.Session;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
 
 public interface SessionService 
 {
