@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.sun.istack.NotNull;
 
 @Entity
-@Table( name="product_entity")
+@Table( name="product_entity", schema ="public")
 public class Product 
 {
     @Id
@@ -50,14 +50,15 @@ public class Product
 			String name, 
 			String description, 
 			String productCategory,
-			String imagePath)
+			String imagePath,
+			User user)
 	{
 		this.name = name;
 		this.description = description;
 		this.productCategory = productCategory;
 		this.imagePath = imagePath;
+		this.user = user;
 	}
-
 
 	public String getImageName() {
 		return imagePath;
@@ -79,6 +80,10 @@ public class Product
 		return productCategory;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -94,4 +99,5 @@ public class Product
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+	
 }

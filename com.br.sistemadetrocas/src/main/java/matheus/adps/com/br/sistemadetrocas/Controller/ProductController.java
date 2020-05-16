@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
 import matheus.adps.com.br.sistemadetrocas.Model.Product;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
 import matheus.adps.com.br.sistemadetrocas.Service.ProductService;
+import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
@@ -38,6 +40,16 @@ public class ProductController
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
+	@GetMapping(path = "/get-all-my-products" )
+	public ResponseEntity<List<Product>> getAll()
+	{		
+		final List<Product> allProducts = productService.getAll();
+		if ( allProducts == null ) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(allProducts, HttpStatus.OK);				
+	}
+	
 	@GetMapping( path = "/get-by-name/{name}" )
 	public ResponseEntity<Product> get(
 			@PathVariable final String name)
@@ -48,17 +60,6 @@ public class ProductController
 		}
 		return new ResponseEntity<>(productRecovered, HttpStatus.OK);
 	}
-	
-	@GetMapping(path = "/get-all" )
-	public ResponseEntity<List<Product>> getAll()
-	{
-		final List<Product> allProducts = productService.getAll();
-		if ( allProducts == null || allProducts.size() == 0 ) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		return new ResponseEntity<>(allProducts, HttpStatus.OK);				
-	}
-	
 	
 	@PatchMapping( path = "/update-by-name" )
 	public ResponseEntity<Product> update(

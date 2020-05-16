@@ -22,7 +22,6 @@ import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
 @WebFilter( filterName = "AuthenticationFilter", urlPatterns = {
-		"/product-category/*",
 		"/product/*",
 		"/user/get-by-email/*",
 		"/user/update",

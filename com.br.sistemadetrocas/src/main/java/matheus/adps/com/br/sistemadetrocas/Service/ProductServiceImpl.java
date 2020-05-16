@@ -1,5 +1,7 @@
 package matheus.adps.com.br.sistemadetrocas.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,8 +10,11 @@ import org.springframework.stereotype.Service;
 
 import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
 import matheus.adps.com.br.sistemadetrocas.Exception.ProductDuplicate;
+import matheus.adps.com.br.sistemadetrocas.Exception.ProductNotFoundException;
 import matheus.adps.com.br.sistemadetrocas.Model.Product;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
 import matheus.adps.com.br.sistemadetrocas.Repository.ProductRepository;
+import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 
 @Service
 public class ProductServiceImpl 
@@ -31,13 +36,21 @@ public class ProductServiceImpl
 				productDTO.getName(),
 				productDTO.getDescription(),
 				productDTO.getProductCategory(),
-				productDTO.getImagePath());
+				productDTO.getImagePath(),
+				ThreadLocalWithUserContext.getUserContext()
+				);
 		return productRepository.save(product);
 	}
 
 	@Override
 	public List<Product> getAll() {
-		return productRepository.findAll();
+		final User user = ThreadLocalWithUserContext.getUserContext();
+		final Optional<List<Product>> optionalProducts = productRepository.findByUserId(user.getId());
+		if (! optionalProducts.isPresent() ) {
+			List<Product> empty = new ArrayList<Product>(0);
+			return empty;
+		}		
+		return optionalProducts.get();
 	}
 
 	@Override
