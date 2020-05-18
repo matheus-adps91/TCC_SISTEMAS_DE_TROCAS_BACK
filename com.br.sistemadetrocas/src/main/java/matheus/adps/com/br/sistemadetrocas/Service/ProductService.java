@@ -19,5 +19,5 @@ public interface ProductService
 			ProductDTO productDTO);
 	
 	boolean delete(
-			String code);
+			String name);
 }

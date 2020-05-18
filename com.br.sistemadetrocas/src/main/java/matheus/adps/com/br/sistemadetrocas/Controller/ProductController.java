@@ -68,10 +68,10 @@ public class ProductController
 		return new ResponseEntity<>(productService.updateByName(productDTO), HttpStatus.OK);
 	}
 	
-	@DeleteMapping( path = "/delete-by-code/{code}" )
+	@DeleteMapping( path = "/delete-by-name/{name}" )
 	public boolean delete(
-			@PathVariable final String code )
+			@PathVariable final String name )
 	{
-		return productService.delete(code);
+		return productService.delete(name);
 	}
 }

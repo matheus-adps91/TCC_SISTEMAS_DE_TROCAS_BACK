@@ -77,9 +77,9 @@ public class ProductServiceImpl
 
 	@Override
 	public boolean delete(
-			final String code) 
+			final String name) 
 	{
-		final Product product = getByName(code);
+		final Product product = getByName(name);
 		productRepository.delete(product);
 		return true;
 	}
