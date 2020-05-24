@@ -66,12 +66,14 @@ public class ProductServiceImpl
 
 	@Override
 	public Product updateByName(
-			final ProductDTO productDTO) 
+			final ProductDTO productDTO,
+			final String productName) 
 	{
-		final Product product = getByName(productDTO.getName());		
+		final Product product = getByName(productName);		
 		product.setName(productDTO.getName());
 		product.setDescription(productDTO.getDescription());		
 		product.setProductCategory(productDTO.getProductCategory());
+		product.setImagePath(productDTO.getImagePath());
 		return productRepository.save(product);
 	}
 

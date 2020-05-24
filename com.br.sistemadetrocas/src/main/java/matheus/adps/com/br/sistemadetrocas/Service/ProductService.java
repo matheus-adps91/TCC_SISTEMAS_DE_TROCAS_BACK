@@ -16,7 +16,7 @@ public interface ProductService
 			String name);
 	
 	Product updateByName(
-			ProductDTO productDTO);
+			ProductDTO productDTO, String productName);
 	
 	boolean delete(
 			String name);

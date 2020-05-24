@@ -8,18 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
 import matheus.adps.com.br.sistemadetrocas.Model.Product;
-import matheus.adps.com.br.sistemadetrocas.Model.User;
 import matheus.adps.com.br.sistemadetrocas.Service.ProductService;
-import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 
 @CrossOrigin( origins = "*", allowedHeaders = "*" )
 @RestController
@@ -61,11 +59,11 @@ public class ProductController
 		return new ResponseEntity<>(productRecovered, HttpStatus.OK);
 	}
 	
-	@PatchMapping( path = "/update-by-name" )
+	@PutMapping( path = "/update-by-name/{productName}" )
 	public ResponseEntity<Product> update(
-			@RequestBody final ProductDTO productDTO)
+			@RequestBody final ProductDTO productDTO, @PathVariable final String productName)
 	{
-		return new ResponseEntity<>(productService.updateByName(productDTO), HttpStatus.OK);
+		return new ResponseEntity<>(productService.updateByName(productDTO, productName), HttpStatus.OK);
 	}
 	
 	@DeleteMapping( path = "/delete-by-name/{name}" )
