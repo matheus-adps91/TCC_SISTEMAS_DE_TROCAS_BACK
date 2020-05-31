@@ -2,6 +2,7 @@ package matheus.adps.com.br.sistemadetrocas.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +28,7 @@ public class ProductServiceImpl
 	@Override
 	public Product create(
 			final ProductDTO productDTO) 
-	{
-		final Optional<Product> optionalProduct = productRepository.findByName(productDTO.getName());
-		if (optionalProduct.isPresent()) {
-			throw new ProductDuplicate("Produto já cadastrado");
-		}
+	{		
 		final Product product = new Product(
 				productDTO.getName(),
 				productDTO.getDescription(),
@@ -54,22 +51,29 @@ public class ProductServiceImpl
 	}
 
 	@Override
-	public Product getByName(
-			final String name) 
+	public List<Product> getByName(
+			final String productName) 
 	{
-		final Optional<Product> optionalProduct = productRepository.findByName(name);
-		if ( ! optionalProduct.isPresent() ) {
-			return null;
+		final User currentUser = ThreadLocalWithUserContext.getUserContext();
+		final Optional<List<Product>> optionalProducts = productRepository.findByNameContainingAndUserIdNot(productName, currentUser.getId());
+		if ( ! optionalProducts.isPresent() ) {
+			return Collections.emptyList();
 		}
-		return optionalProduct.get();
+		return optionalProducts.get();
 	}
 
+	private Product getUniqueProductByName(
+			final String productName) {
+		final Optional<Product> optionalProduct = productRepository.findByName(productName);
+		return optionalProduct.get();	
+	}
+	
 	@Override
 	public Product updateByName(
 			final ProductDTO productDTO,
 			final String productName) 
 	{
-		final Product product = getByName(productName);		
+		final Product product = getUniqueProductByName(productName);		
 		product.setName(productDTO.getName());
 		product.setDescription(productDTO.getDescription());		
 		product.setProductCategory(productDTO.getProductCategory());
@@ -79,9 +83,9 @@ public class ProductServiceImpl
 
 	@Override
 	public boolean delete(
-			final String name) 
+			final String productName) 
 	{
-		final Product product = getByName(name);
+		final Product product = getUniqueProductByName(productName);
 		productRepository.delete(product);
 		return true;
 	}

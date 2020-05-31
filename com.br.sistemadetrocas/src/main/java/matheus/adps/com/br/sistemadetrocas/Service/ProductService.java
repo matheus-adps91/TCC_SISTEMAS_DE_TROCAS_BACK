@@ -12,12 +12,12 @@ public interface ProductService
 	
 	List<Product> getAll();
 	
-	Product getByName(
-			String name);
+	List<Product> getByName(
+			String productName);
 	
 	Product updateByName(
 			ProductDTO productDTO, String productName);
 	
 	boolean delete(
-			String name);
+			String productName);
 }

@@ -6,14 +6,18 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import matheus.adps.com.br.sistemadetrocas.Model.Product;
-import matheus.adps.com.br.sistemadetrocas.Model.User;
 
 public interface ProductRepository 
 	extends 
 		JpaRepository<Product, Integer> 
 {
+	
+    Optional<List<Product>> findByNameContainingAndUserIdNot(
+            String name,
+            Integer id);
+    
     Optional<Product> findByName(
-            String name );
+            String productName );
     
     Optional<List<Product>> findByUserId(
     		int id);

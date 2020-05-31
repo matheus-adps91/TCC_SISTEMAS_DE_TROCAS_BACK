@@ -114,4 +114,10 @@
 			baseTableName="product_entity" baseColumnNames="id_user" />
 	</changeSet>
 	
+	<changeSet id="4" author="matheus.silva">
+	
+		<addUniqueConstraint columnNames="name" tableName="product_entity" 
+			constraintName="uk_product_name"/>
+	</changeSet>
+	
 </databaseChangeLog>

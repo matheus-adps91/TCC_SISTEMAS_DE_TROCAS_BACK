@@ -48,15 +48,15 @@ public class ProductController
 		return new ResponseEntity<>(allProducts, HttpStatus.OK);				
 	}
 	
-	@GetMapping( path = "/get-by-name/{name}" )
-	public ResponseEntity<Product> get(
-			@PathVariable final String name)
+	@GetMapping( path = "/get-by-name/{productName}" )
+	public ResponseEntity< List<Product>> get(
+			@PathVariable final String productName)
 	{
-		final Product productRecovered = productService.getByName(name);
-		if ( productRecovered == null ) {
+		final List<Product> productsRecovered = productService.getByName(productName);
+		if ( productsRecovered.isEmpty() ) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<>(productRecovered, HttpStatus.OK);
+		return new ResponseEntity<>(productsRecovered, HttpStatus.OK);
 	}
 	
 	@PutMapping( path = "/update-by-name/{productName}" )
