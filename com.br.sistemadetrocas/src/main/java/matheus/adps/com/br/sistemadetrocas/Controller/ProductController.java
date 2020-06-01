@@ -59,6 +59,17 @@ public class ProductController
 		return new ResponseEntity<>(productsRecovered, HttpStatus.OK);
 	}
 	
+	@GetMapping( path = "/get-by-category/{productCategory}")
+	public ResponseEntity<List<Product>> getByCategory(
+			@PathVariable final String productCategory) 
+	{
+		final List<Product> productsRecovered = productService.getProductsByProductCategory(productCategory);
+		if (productsRecovered.isEmpty() ) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(productsRecovered, HttpStatus.OK);
+	}
+	
 	@PutMapping( path = "/update-by-name/{productName}" )
 	public ResponseEntity<Product> update(
 			@RequestBody final ProductDTO productDTO, @PathVariable final String productName)

@@ -62,6 +62,18 @@ public class ProductServiceImpl
 		return optionalProducts.get();
 	}
 
+	@Override
+	public List<Product> getProductsByProductCategory(
+			final String productCategory) 
+	{
+		final User currentUser = ThreadLocalWithUserContext.getUserContext();
+		final Optional<List<Product>> optionalProducts = productRepository.findByProductCategoryAndUserIdNot(productCategory, currentUser.getId());
+		if ( ! optionalProducts.isPresent() ) {
+			return Collections.emptyList();
+		}
+		return optionalProducts.get();
+	}
+	
 	private Product getUniqueProductByName(
 			final String productName) {
 		final Optional<Product> optionalProduct = productRepository.findByName(productName);
@@ -89,4 +101,5 @@ public class ProductServiceImpl
 		productRepository.delete(product);
 		return true;
 	}
+
 }

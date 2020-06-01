@@ -15,9 +15,13 @@ public interface ProductService
 	List<Product> getByName(
 			String productName);
 	
+	List<Product> getProductsByProductCategory(
+			String productCategory);
+	
 	Product updateByName(
 			ProductDTO productDTO, String productName);
 	
 	boolean delete(
 			String productName);
+
 }

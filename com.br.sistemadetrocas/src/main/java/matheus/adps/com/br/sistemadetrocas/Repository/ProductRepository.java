@@ -13,8 +13,10 @@ public interface ProductRepository
 {
 	
     Optional<List<Product>> findByNameContainingAndUserIdNot(
-            String name,
-            Integer id);
+            String name, Integer id);
+    
+    Optional<List<Product>> findByProductCategoryAndUserIdNot(
+    		String productCategory, Integer id);
     
     Optional<Product> findByName(
             String productName );
