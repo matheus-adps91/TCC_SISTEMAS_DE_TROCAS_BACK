@@ -2,6 +2,7 @@ package matheus.adps.com.br.sistemadetrocas.Model;
 
 import java.time.LocalDateTime;
 
+import javax.annotation.Nonnull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -12,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table( name = "user_session_entity" )
@@ -23,18 +23,18 @@ public class Session
 	@GeneratedValue ( strategy = GenerationType.SEQUENCE, generator = "gen_session_seq" )
 	private int id;
 	
-	@NotNull
+	@Nonnull
 	@Column
 	private LocalDateTime loginDate;
 	
 	@Column
 	private LocalDateTime logoutDate;
 	
-	@NotNull
+	@Nonnull
 	@Column
 	private LocalDateTime expirationDate;
 	
-	@NotNull
+	@Nonnull
 	@Column
 	private String token;
 	
@@ -47,10 +47,10 @@ public class Session
 	}
 
 	public Session(
-			@NotNull LocalDateTime loginDate,
-			@NotNull LocalDateTime expirationDate,
-			@NotNull String token, 
-			@NotNull User user) 
+			LocalDateTime loginDate,
+			LocalDateTime expirationDate,
+			String token, 
+			User user) 
 	{
 		this.loginDate = loginDate;
 		this.logoutDate = null;

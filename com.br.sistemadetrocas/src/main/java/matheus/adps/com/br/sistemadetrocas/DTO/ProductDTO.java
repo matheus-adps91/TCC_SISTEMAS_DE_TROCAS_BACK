@@ -3,7 +3,7 @@ package matheus.adps.com.br.sistemadetrocas.DTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductDTO 
-{	
+{
 	@JsonProperty
 	private String name;
 	
@@ -46,5 +46,4 @@ public class ProductDTO
 	public String getImagePath() {
 		return imagePath;
 	}
-
 }

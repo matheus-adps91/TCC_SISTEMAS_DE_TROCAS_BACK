@@ -64,6 +64,34 @@ public class User
 	}
 
 	public User(
+			final Integer id,
+			final String email, 
+			final String password, 
+			final String fullName, 
+			final String gender, 
+			final String address, 
+			final String houseNumber,
+			final String state, 
+			final String city, 
+			final String zipCode,
+			final String complement,
+			final boolean compliance) 
+	{
+		this.id = id;
+		this.email = email;
+		this.password = password;
+		this.fullName = fullName;
+		this.gender = gender;
+		this.address = address;
+		this.houseNumber = houseNumber;
+		this.state = state;
+		this.city = city;
+		this.zipCode = zipCode;
+		this.complement = complement;
+		this.compliance = compliance;
+	}
+
+	public User(
 			final String email, 
 			final String password, 
 			final String fullName, 
@@ -88,7 +116,6 @@ public class User
 		this.complement = complement;
 		this.compliance = compliance;
 	}
-
 	
 	public String getComplement() {
 		return complement;

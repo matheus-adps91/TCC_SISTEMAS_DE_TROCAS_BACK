@@ -120,4 +120,47 @@
 			constraintName="uk_product_name"/>
 	</changeSet>
 	
+	<changeSet id="5" author="matheus.silva">
+		
+		<dropPrimaryKey tableName="product_entity"/>
+		<addPrimaryKey tableName="product_entity" columnNames="id, id_user"/>
+	</changeSet>
+	
+	<changeSet id="6" author="matheus.silva">
+		<comment>Adiciona as colunas de dealing e active no produto</comment>
+		
+		<addColumn tableName="product_entity">
+			<column name="dealing" type="boolean" defaultValueBoolean="false" />
+			<column name="inactive" type="boolean" defaultValueBoolean="false" />
+		</addColumn>
+		
+	</changeSet>
+	
+	<changeSet id="7" author="matheus.silva">
+		<comment>Tabela intermediária para armazenar a proposta, não tem ligação com outras tabelas</comment>
+		
+		<createSequence sequenceName="predeal_entity_seq"/>
+		
+		<createTable tableName="pre_deal_entity">
+			<column name="id" type="int" valueSequenceNext="predeal_entity_seq">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="id_user_proponent" type="int" />
+			<column name="id_prod_proponent" type="int" />
+			<column name="id_user_proposed" type="int" />
+			<column name="id_prod_proposed" type="int" />
+		</createTable>
+
+		<addUniqueConstraint columnNames="id_user_proponent,id_prod_proponent,id_user_proposed,id_prod_proposed" tableName="pre_deal_entity"/>
+	</changeSet>
+	
+	<changeSet id="8" author="matheus.silva">
+		<comment>Adicionar a coluna inactive and answered</comment>
+		
+		<addColumn tableName="pre_deal_entity">
+			<column name="answered" type="boolean" defaultValueBoolean="false" />
+			<column name="inactive" type="boolean" defaultValueBoolean="false" />
+			<column name="viewed" type="boolean" defaultValueBoolean="false" />
+		</addColumn>
+	</changeSet>
 </databaseChangeLog>

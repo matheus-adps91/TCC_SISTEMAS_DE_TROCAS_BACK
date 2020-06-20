@@ -11,7 +11,6 @@ public interface ProductRepository
 	extends 
 		JpaRepository<Product, Integer> 
 {
-	
     Optional<List<Product>> findByNameContainingAndUserIdNot(
             String name, Integer id);
     
