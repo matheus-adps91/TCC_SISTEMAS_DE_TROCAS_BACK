@@ -70,6 +70,14 @@ public class ProductController
 		return new ResponseEntity<>(productsRecovered, HttpStatus.OK);
 	}
 	
+	@GetMapping(path = "/get-products-in-deal/{products}")
+	public ResponseEntity<List<Product>> getProductsInDeal(
+			@PathVariable final String products)
+	{
+		final List<Product> productsInDeal = productService.getProductsInDeal(products);
+		return new ResponseEntity<>(productsInDeal, HttpStatus.OK);	
+	}
+	
 	@PutMapping( path = "/update-by-name/{productName}" )
 	public ResponseEntity<Product> update(
 			@RequestBody final ProductDTO productDTO, @PathVariable final String productName)

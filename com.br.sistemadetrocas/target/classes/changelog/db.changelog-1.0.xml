@@ -137,30 +137,52 @@
 	</changeSet>
 	
 	<changeSet id="7" author="matheus.silva">
-		<comment>Tabela intermediária para armazenar a proposta, não tem ligação com outras tabelas</comment>
+		<comment>Tabela referente as negociações</comment>
 		
-		<createSequence sequenceName="predeal_entity_seq"/>
+		<createSequence sequenceName="deal_entity_seq"/>
 		
-		<createTable tableName="pre_deal_entity">
-			<column name="id" type="int" valueSequenceNext="predeal_entity_seq">
-				<constraints primaryKey="true"/>
+		<createTable tableName="deal_entity">
+			<column name="id" type="integer">
+				<constraints primaryKey="true" />
 			</column>
-			<column name="id_user_proponent" type="int" />
-			<column name="id_prod_proponent" type="int" />
-			<column name="id_user_proposed" type="int" />
-			<column name="id_prod_proposed" type="int" />
+			<column name="viewed" type="boolean" />
+			<column name="answered" type="boolean" />
+			<column name="inactive" type="boolean" />
+			<column name="status_proponent" type="varchar(255)" />
+			<column name="status_proposed" type="varchar(255)" />
 		</createTable>
-
-		<addUniqueConstraint columnNames="id_user_proponent,id_prod_proponent,id_user_proposed,id_prod_proposed" tableName="pre_deal_entity"/>
 	</changeSet>
 	
 	<changeSet id="8" author="matheus.silva">
-		<comment>Adicionar a coluna inactive and answered</comment>
+		<comment>Tabela associativa entre Product e Deal</comment>
 		
-		<addColumn tableName="pre_deal_entity">
-			<column name="answered" type="boolean" defaultValueBoolean="false" />
-			<column name="inactive" type="boolean" defaultValueBoolean="false" />
-			<column name="viewed" type="boolean" defaultValueBoolean="false" />
-		</addColumn>
+		<createSequence sequenceName="product_deal_entity_seq"/>
+		
+		<createTable tableName="product_deal_entity">
+			<column name="id" type="integer" />
+			<column name="id_user_product_proponent" type="integer" />
+			<column name="id_prod_proponent" type="integer" />
+			<column name="id_deal" type="integer" />
+			<column name="id_user_product_proposed" type="integer" />
+			<column name="id_prod_proposed" type="integer" />		
+		</createTable>
+	
+		<addForeignKeyConstraint constraintName="fk_product_proponent_product_deal" 
+			referencedTableName="product_entity" baseTableName="product_deal_entity"
+			referencedColumnNames="id_user, id" baseColumnNames="id_user_product_proponent, id_prod_proponent"/>
+			
+		<addForeignKeyConstraint constraintName="fk_product_proposed_product_deal" 
+			referencedTableName="product_entity" baseTableName="product_deal_entity"
+			referencedColumnNames="id_user, id" baseColumnNames="id_user_product_proposed, id_prod_proposed"/>
+			
+		<addForeignKeyConstraint constraintName="fk_deal_product_deal" 
+			referencedTableName="deal_entity" baseTableName="product_deal_entity"
+			referencedColumnNames="id" baseColumnNames="id_deal"/>
+		
+		<addPrimaryKey constraintName="pk_product_deal_associative" 
+			tableName="product_deal_entity" columnNames="id" />
+		
+		<addUniqueConstraint constraintName="uk_unique_deal" 
+			tableName="product_deal_entity" columnNames="id_user_product_proponent, id_prod_proponent, id_user_product_proposed, id_prod_proposed" />
 	</changeSet>
 </databaseChangeLog>

@@ -17,6 +17,9 @@ public interface ProductRepository
     Optional<List<Product>> findByProductCategoryAndUserIdNot(
     		String productCategory, Integer id);
     
+    Optional<Product> findById(
+    		Integer id);
+    
     Optional<Product> findByName(
             String productName );
     

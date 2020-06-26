@@ -2,23 +2,14 @@ package matheus.adps.com.br.sistemadetrocas.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedStoredProcedureQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.ParameterMode;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 @Entity
-@NamedStoredProcedureQuery( name = "Deal.InsertNewDealSafety", procedureName = "insert_new_deal_safety", parameters = {
-		@StoredProcedureParameter(mode = ParameterMode.IN, name = "idProdProponent", type = Integer.class),
-		@StoredProcedureParameter(mode = ParameterMode.IN, name = "idProdProposed", type = Integer.class)
-})
+
 @Table ( name="deal_entity", schema ="public")
 public class Deal 
 {
@@ -27,49 +18,62 @@ public class Deal
 	@GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "gen_deal_seq" )
 	private Integer id;
 	
-	@OneToOne
-	@JoinColumn( name = "id_product_proponent", foreignKey = @ForeignKey(name = "fk_deal_product_proponent"), nullable = false)
-	private Product productProponent;
-	
-	@OneToOne
-	@JoinColumn( name = "id_product_proposed", foreignKey = @ForeignKey(name = "fk_deal_product_proposed"), nullable = false)
-	private Product productProposed;
+	@Column
+	private Boolean viewed;
 	
 	@Column
-	private String dealStatusUserProponent;
+	private Boolean answered;
 	
 	@Column
-	private String dealStatusUserProposed;
+	private Boolean inactive;
+	
+	@Column
+	private String statusProponent;
+	
+	@Column
+	private String statusProposed;
 
 	public Deal() 
 	{
 	}
 
 	public Deal(
-			Product productProponent, 
-			Product productProposed,
-			String dealStatusUserProponent,
-			String dealStatusUserProposed) 
+			Boolean viewed, 
+			Boolean answered, 
+			Boolean inactive, 
+			String statusProponent,
+			String statusProposed) 
 	{
-		this.productProponent = productProponent;
-		this.productProposed = productProposed;
-		this.dealStatusUserProponent = dealStatusUserProponent;
-		this.dealStatusUserProposed = dealStatusUserProposed;
+		this.viewed = viewed;
+		this.answered = answered;
+		this.inactive = inactive;
+		this.statusProponent = statusProponent;
+		this.statusProposed = statusProposed;
 	}
 
-	public Product getProductProponent() {
-		return productProponent;
+
+	public Integer getId() {
+		return id;
 	}
 
-	public Product getProductProposed() {
-		return productProposed;
-	}
-	
-	public String getDealStatusUserProponent() {
-		return dealStatusUserProponent;
+	public Boolean getViewed() {
+		return viewed;
 	}
 
-	public String getDealStatusUserProposed() {
-		return dealStatusUserProposed;
+	public Boolean getAnswered() {
+		return answered;
 	}
+
+	public Boolean getInactive() {
+		return inactive;
+	}
+
+	public String getStatusProponent() {
+		return statusProponent;
+	}
+
+	public String getStatusProposed() {
+		return statusProposed;
+	}
+
 }

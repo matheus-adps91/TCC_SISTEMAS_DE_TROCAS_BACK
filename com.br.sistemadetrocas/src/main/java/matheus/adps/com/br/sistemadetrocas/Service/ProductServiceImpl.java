@@ -1,6 +1,7 @@
 package matheus.adps.com.br.sistemadetrocas.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -96,6 +97,24 @@ public class ProductServiceImpl
 		final Product product = getUniqueProductByName(productName);
 		productRepository.delete(product);
 		return true;
+	}
+
+	@Override
+	public List<Product> getProductsInDeal(
+			final String products) 
+	{
+		String[] split = products.split("&");
+		int idFirstProduct = Integer.parseInt(split[0]);
+		int idSecondProduct = Integer.parseInt(split[1]);
+		final Product productProponent = getProduct(idFirstProduct);
+		final Product productProposed = getProduct(idSecondProduct);
+		return Arrays.asList(productProponent, productProposed);
+	}
+	
+	private Product getProduct(
+			final Integer id) 
+	{
+		return productRepository.findById(id).get();
 	}
 
 }

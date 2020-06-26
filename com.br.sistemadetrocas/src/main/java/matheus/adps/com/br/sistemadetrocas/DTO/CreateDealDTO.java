@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import matheus.adps.com.br.sistemadetrocas.Model.Product;
 
-public class DealDTO 
+public class CreateDealDTO 
 {
 	@JsonProperty
 	private Product productProponent;
@@ -12,13 +12,7 @@ public class DealDTO
 	@JsonProperty
 	private Product productProposed;
 	
-	@JsonProperty
-	private String dealStatusUserProponent;
-	
-	@JsonProperty
-	private String dealStatusUserProposed;
-	
-	public DealDTO()
+	public CreateDealDTO()
 	{
 	}
 
@@ -30,11 +24,4 @@ public class DealDTO
 		return productProposed;
 	}
 
-	public String getDealStatusUserProponent() {
-		return dealStatusUserProponent;
-	}
-	
-	public String getDealStatusUserProposed() {
-		return dealStatusUserProposed;
-	}
 }

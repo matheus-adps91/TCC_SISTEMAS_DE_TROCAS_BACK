@@ -27,7 +27,7 @@ import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 		"/user/update",
 		"/user/update-password",
 		"/auth/logout",
-		"/pre-deal/*"
+		"/deal/*"
 })
 public class AuthFilter
 	implements

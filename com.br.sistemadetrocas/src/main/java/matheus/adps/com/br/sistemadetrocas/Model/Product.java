@@ -1,5 +1,7 @@
 package matheus.adps.com.br.sistemadetrocas.Model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -16,8 +18,15 @@ import com.sun.istack.NotNull;
 @Entity
 @Table( name="product_entity", schema ="public")
 public class Product 
+	implements 
+		Serializable
 {
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @SequenceGenerator( name = "gen_user_seq", sequenceName = "user_seq", allocationSize = 1)
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "gen_user_seq" )
     private Integer id;
