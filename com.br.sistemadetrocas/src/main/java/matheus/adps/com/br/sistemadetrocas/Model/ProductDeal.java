@@ -41,6 +41,15 @@ public class ProductDeal
 	{
 	}
 
+	// Construtor usado na lógica dos papéis invertido
+	public ProductDeal(
+			Product productProponent, 
+			Product productProposed) 
+	{
+		this.productProponent = productProponent;
+		this.productProposed = productProposed;
+	}
+	
 	public ProductDeal(
 			Product productProponent, 
 			Product productProposed, 

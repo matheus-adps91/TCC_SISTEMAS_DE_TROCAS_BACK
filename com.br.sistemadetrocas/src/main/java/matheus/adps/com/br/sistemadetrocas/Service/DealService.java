@@ -16,4 +16,7 @@ public interface DealService
 
 	List<ProductDeal> get(
 			Integer idUserProposed);
+
+	void deleteProductDeal(
+			Integer id);
 }
