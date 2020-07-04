@@ -2,8 +2,6 @@ package matheus.adps.com.br.sistemadetrocas.Service;
 
 import java.util.List;
 
-import org.springframework.data.util.Pair;
-
 import matheus.adps.com.br.sistemadetrocas.DTO.ProductDTO;
 import matheus.adps.com.br.sistemadetrocas.Model.Product;
 

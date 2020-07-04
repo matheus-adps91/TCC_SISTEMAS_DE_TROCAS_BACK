@@ -18,7 +18,7 @@ public class ProductDeal
 {	
 	@Id
 	@SequenceGenerator( name="gen_product_deal_seq", sequenceName = "product_deal_entity_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_product_deal_seq" )
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen_product_deal_seq" )	
 	private Integer id;
 	
 	@ManyToOne
@@ -60,6 +60,18 @@ public class ProductDeal
 		this.idDeal = idDeal;
 	}
 
+	public ProductDeal(
+			Integer id, 
+			Product productProponent, 
+			Product productProposed, 
+			Integer idDeal) 
+	{
+		this.id = id;
+		this.productProponent = productProponent;
+		this.productProposed = productProposed;
+		this.idDeal = idDeal;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

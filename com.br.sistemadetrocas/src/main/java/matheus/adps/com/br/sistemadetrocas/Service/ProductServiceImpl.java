@@ -32,13 +32,15 @@ public class ProductServiceImpl
 				productDTO.getDescription(),
 				productDTO.getProductCategory(),
 				productDTO.getImagePath(),
+				productDTO.getDealing(),
 				ThreadLocalWithUserContext.getUserContext()
 				);
 		return productRepository.save(product);
 	}
 
 	@Override
-	public List<Product> getAll() {
+	public List<Product> getAll() 
+	{
 		final User user = ThreadLocalWithUserContext.getUserContext();
 		final Optional<List<Product>> optionalProducts = productRepository.findByUserId(user.getId());
 		if (! optionalProducts.isPresent() ) {
@@ -52,7 +54,8 @@ public class ProductServiceImpl
 			final String productName) 
 	{
 		final User currentUser = ThreadLocalWithUserContext.getUserContext();
-		final Optional<List<Product>> optionalProducts = productRepository.findByNameContainingAndUserIdNot(productName, currentUser.getId());
+		final Optional<List<Product>> optionalProducts = productRepository.findByNameContainingAndUserIdNotAndDealing(
+				productName, currentUser.getId(), Boolean.FALSE);
 		if ( ! optionalProducts.isPresent() ) {
 			return Collections.emptyList();
 		}
@@ -64,7 +67,8 @@ public class ProductServiceImpl
 			final String productCategory) 
 	{
 		final User currentUser = ThreadLocalWithUserContext.getUserContext();
-		final Optional<List<Product>> optionalProducts = productRepository.findByProductCategoryAndUserIdNot(productCategory, currentUser.getId());
+		final Optional<List<Product>> optionalProducts = productRepository.findByProductCategoryAndUserIdNotAndDealing(
+				productCategory, currentUser.getId(), Boolean.FALSE);
 		if ( ! optionalProducts.isPresent() ) {
 			return Collections.emptyList();
 		}
@@ -72,7 +76,8 @@ public class ProductServiceImpl
 	}
 	
 	private Product getUniqueProductByName(
-			final String productName) {
+			final String productName) 
+	{
 		final Optional<Product> optionalProduct = productRepository.findByName(productName);
 		return optionalProduct.get();	
 	}

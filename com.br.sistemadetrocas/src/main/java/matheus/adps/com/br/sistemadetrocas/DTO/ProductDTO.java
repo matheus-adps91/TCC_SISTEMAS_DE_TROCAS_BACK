@@ -15,19 +15,25 @@ public class ProductDTO
 	
 	@JsonProperty
 	private String imagePath;
+	
+	@JsonProperty
+	private Boolean dealing;
 
-	public ProductDTO() {
+	public ProductDTO() 
+	{
 	}
 
 	public ProductDTO(
 			String name, 
 			String description, 
-			String productCategory, 
+			String productCategory,
+			Boolean dealing,
 			String imagePath)
 	{		
 		this.name = name;
 		this.description = description;
 		this.productCategory = productCategory;
+		this.dealing = dealing;
 		this.imagePath = imagePath;
 	}
 
@@ -41,6 +47,10 @@ public class ProductDTO
 	
 	public String getProductCategory() {
 		return productCategory;
+	}
+	
+	public Boolean getDealing() {
+		return dealing;
 	}
 
 	public String getImagePath() {

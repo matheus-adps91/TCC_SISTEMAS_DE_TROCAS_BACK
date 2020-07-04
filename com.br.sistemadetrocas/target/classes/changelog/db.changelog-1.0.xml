@@ -185,4 +185,77 @@
 		<addUniqueConstraint constraintName="uk_unique_deal" 
 			tableName="product_deal_entity" columnNames="id_user_product_proponent, id_prod_proponent, id_user_product_proposed, id_prod_proposed" />
 	</changeSet>
+	
+	<changeSet id="9" author="matheus.silva">
+		<comment>Procedure que aceita um deal, faz a toda a manutenção no banco</comment>
+		
+		<createProcedure procedureName="accept_deal_safety" dbms="postgresql">
+			CREATE OR REPLACE FUNCTION public.AcceptDealSafety(
+				in id_product_proponent integer, 
+				in id_product_proposed integer)
+			RETURNS void AS
+			$BODY$
+				DECLARE 
+					var_id_deal INTEGER[];
+				BEGIN
+					RAISE NOTICE 'ID PRODUCT PROPONENT %', id_product_proponent;
+					RAISE NOTICE 'ID PRODUCT PROPOSED %', id_product_proposed;
+									
+					var_id_deal := (SELECT ARRAY(
+						SELECT id_deal
+						FROM public.product_deal_entity
+						WHERE id_deal IN (
+							SELECT id_deal FROM product_deal_entity pde WHERE
+							pde.id_prod_proponent = id_product_proponent OR
+							pde.id_prod_proposed = id_product_proponent OR
+							pde.id_prod_proponent = id_product_proposed OR
+							pde.id_prod_proposed = id_product_proposed 
+						EXCEPT
+							( SELECT id_deal FROM product_deal_entity pde2 WHERE
+								pde2.id_prod_proponent =  id_product_proponent AND
+								pde2.id_prod_proposed = id_product_proposed )
+						)
+					) );
+					
+					DELETE FROM product_deal_entity 
+					WHERE id IN
+					(SELECT id FROM product_deal_entity pde WHERE
+						pde.id_prod_proponent = id_product_proponent OR
+						pde.id_prod_proposed = id_product_proposed
+					EXCEPT
+					( SELECT id FROM product_deal_entity pde WHERE
+								pde.id_prod_proponent = id_product_proponent AND
+								pde.id_prod_proposed = id_product_proposed));
+								
+					DELETE FROM product_deal_entity 
+					WHERE id IN
+					(SELECT id FROM product_deal_entity pde WHERE
+						pde.id_prod_proponent = id_product_proposed OR
+						pde.id_prod_proposed = id_product_proponent
+					EXCEPT
+					( SELECT id FROM product_deal_entity pde WHERE
+								pde.id_prod_proponent =  id_product_proponent AND
+								pde.id_prod_proposed = id_product_proposed));
+								
+					RAISE NOTICE 'ID DEALS TO BE DELETED %', var_id_deal;
+					
+					DELETE FROM deal_entity 
+					WHERE id = ANY(var_id_deal);
+		
+					UPDATE public.deal_entity
+					SET viewed = true, answered = true, status_proponent = 'Negócio em Andamento', status_proposed = 'Negócio em Andamento'
+					WHERE id IN
+						( SELECT id_deal FROM product_deal_entity pde2 WHERE
+								pde2.id_prod_proponent =  id_product_proponent AND
+								pde2.id_prod_proposed = id_product_proposed );
+					
+					UPDATE public.product_entity
+					SET dealing = true
+					WHERE id = id_product_proponent OR id = id_product_proposed;
+				END;
+				$BODY$
+				LANGUAGE plpgsql VOLATILE
+		</createProcedure>
+	
+	</changeSet>
 </databaseChangeLog>

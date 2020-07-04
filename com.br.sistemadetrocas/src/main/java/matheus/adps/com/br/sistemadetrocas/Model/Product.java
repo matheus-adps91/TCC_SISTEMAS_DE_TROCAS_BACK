@@ -13,15 +13,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.sun.istack.NotNull;
-
 @Entity
 @Table( name="product_entity", schema ="public")
 public class Product 
 	implements 
 		Serializable
 {
-    /**
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
@@ -31,22 +29,21 @@ public class Product
     @GeneratedValue( strategy = GenerationType.SEQUENCE, generator = "gen_user_seq" )
     private Integer id;
     
-    @NotNull
     @Column( unique = true )
     private String name;
     
-    @NotNull
 	@Column
 	private String description;
 	
-    @NotNull
 	@Column
 	private String productCategory;
 
-    @NotNull
     @Column
     private String imagePath;
-	
+    
+    @Column
+    private Boolean dealing;
+
 	@ManyToOne
 	@JoinColumn (name = "id_user", foreignKey = @ForeignKey( name = "fk_product_user"), nullable = false)
 	private User user;
@@ -54,23 +51,39 @@ public class Product
 	public Product() 
 	{
 	}
-
+	
 	public Product(
 			String name, 
 			String description, 
 			String productCategory,
 			String imagePath,
+			Boolean dealing,
 			User user)
 	{
 		this.name = name;
 		this.description = description;
 		this.productCategory = productCategory;
 		this.imagePath = imagePath;
+		this.dealing = dealing;
 		this.user = user;
 	}
 
-	public String getImageName() {
-		return imagePath;
+	public Product(
+			Integer id, 
+			String name, 
+			String description, 
+			String productCategory, 
+			String imagePath,
+			Boolean dealing, 
+			User user) 
+	{
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.productCategory = productCategory;
+		this.imagePath = imagePath;
+		this.dealing = dealing;
+		this.user = user;
 	}
 
 	public Integer getId() {
@@ -89,6 +102,14 @@ public class Product
 		return productCategory;
 	}
 
+	public String getImageName() {
+		return imagePath;
+	}
+
+	public Boolean getDealing() {
+		return dealing;
+	}
+	
 	public User getUser() {
 		return user;
 	}

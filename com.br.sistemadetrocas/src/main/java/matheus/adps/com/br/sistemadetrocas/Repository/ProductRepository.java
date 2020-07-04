@@ -11,11 +11,11 @@ public interface ProductRepository
 	extends 
 		JpaRepository<Product, Integer> 
 {
-    Optional<List<Product>> findByNameContainingAndUserIdNot(
-            String name, Integer id);
+    Optional<List<Product>> findByNameContainingAndUserIdNotAndDealing(
+            String name, Integer id, Boolean dealing);
     
-    Optional<List<Product>> findByProductCategoryAndUserIdNot(
-    		String productCategory, Integer id);
+    Optional<List<Product>> findByProductCategoryAndUserIdNotAndDealing(
+    		String productCategory, Integer id, Boolean dealing);
     
     Optional<Product> findById(
     		Integer id);

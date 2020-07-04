@@ -9,7 +9,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-
 @Table ( name="deal_entity", schema ="public")
 public class Deal 
 {
@@ -51,6 +50,22 @@ public class Deal
 		this.statusProposed = statusProposed;
 	}
 
+	
+	public Deal(
+			Integer id, 
+			Boolean viewed, 
+			Boolean answered, 
+			Boolean inactive, 
+			String statusProponent,
+			String statusProposed) 
+	{
+		this.id = id;
+		this.viewed = viewed;
+		this.answered = answered;
+		this.inactive = inactive;
+		this.statusProponent = statusProponent;
+		this.statusProposed = statusProposed;
+	}
 
 	public Integer getId() {
 		return id;
