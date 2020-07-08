@@ -1,6 +1,6 @@
 package matheus.adps.com.br.sistemadetrocas.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +13,11 @@ import matheus.adps.com.br.sistemadetrocas.DTO.CreateDealDTO;
 import matheus.adps.com.br.sistemadetrocas.Model.Deal;
 import matheus.adps.com.br.sistemadetrocas.Model.Product;
 import matheus.adps.com.br.sistemadetrocas.Model.ProductDeal;
+import matheus.adps.com.br.sistemadetrocas.Model.User;
 import matheus.adps.com.br.sistemadetrocas.Repository.DealRepository;
 import matheus.adps.com.br.sistemadetrocas.Repository.ProductDealRepository;
 import matheus.adps.com.br.sistemadetrocas.Repository.ProductRepository;
+import matheus.adps.com.br.sistemadetrocas.thread.ThreadLocalWithUserContext;
 
 @Service
 public class DealServiceImpl 
@@ -47,7 +49,7 @@ public class DealServiceImpl
 		if (hasAlreadyInvertedProductDeal) {
 			return null;
 		}
-		final Deal deal = new Deal(Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, "Proposta Enviada","Aguardando Resposta");
+		final Deal deal = new Deal(Boolean.FALSE, Boolean.FALSE, Boolean.FALSE, Integer.valueOf(0), Integer.valueOf(0));
 		final Deal dealSaved = dealRepository.save(deal);
 		final ProductDeal productDeal = new ProductDeal( 
 				createDealDTO.getProductProponent(),  
@@ -104,8 +106,10 @@ public class DealServiceImpl
 		final Product productProposed = acceptedealDTO.getProductProposed();
 		final Integer idProductProponent = productProponent.getId();
 		final Integer idProductProposed = productProposed.getId();
-		Optional<List<ProductDeal>> optionalProductsDealsOnlyProponent = productDealRepository.findByProductProponentIdOrProductProposedId(idProductProponent, idProductProponent);
-		Optional<List<ProductDeal>> optionalProductsDealsOnlyProposed = productDealRepository.findByProductProponentIdOrProductProposedId(idProductProposed, idProductProposed);
+		Optional<List<ProductDeal>> optionalProductsDealsOnlyProponent = productDealRepository.findByProductProponentIdOrProductProposedId(
+				idProductProponent, idProductProponent);
+		Optional<List<ProductDeal>> optionalProductsDealsOnlyProposed = productDealRepository.findByProductProponentIdOrProductProposedId(
+				idProductProposed, idProductProposed);
 				
 		final Integer idProductDeal = acceptedealDTO.getId();
 		final Integer idDeal = acceptedealDTO.getIdDeal();
@@ -129,7 +133,7 @@ public class DealServiceImpl
 		
 		// Atualizando status da proposta na tabela Deal
 		final Deal updatedDeal = new Deal(
-				idDeal, Boolean.TRUE, Boolean.TRUE, Boolean.FALSE, "Troca em Andamento", "Troca em Andamento");
+				idDeal, Boolean.TRUE, Boolean.TRUE, Boolean.FALSE, Integer.valueOf(0), Integer.valueOf(0));
 		dealRepository.save(updatedDeal);
 		
 		// Atualizando o status dos produtos na tabela Product
@@ -193,5 +197,82 @@ public class DealServiceImpl
 		productDealRepository.deleteByIdDeal(idDeal);
 		dealRepository.deleteById(idDeal);				
 	}
+	
+	// Busca as associações entre produto e deal que virarram negócio
+	@Override
+	public List<ProductDeal> getProductsDealsToShowPanel() 
+	{
+		final User user = ThreadLocalWithUserContext.getUserContext();
+		final Optional<List<ProductDeal>> optionalProductsDeals = productDealRepository.findByUserIdAndAcceptedDeal(
+				user.getId(), Boolean.TRUE, Boolean.TRUE);
+		if ( !optionalProductsDeals.isPresent()) {
+			return Collections.emptyList();
+		}
+		return optionalProductsDeals.get();
+	}
 
+	// itero sobre a lista de associações de produto e deal, para pegar todos os ids dos deals
+	private List<Integer> buildListWithIdDeal(
+			final List<ProductDeal> productsDeals) 
+	{
+		List<Integer> ids = new ArrayList<Integer>();
+		for ( final ProductDeal currentProductDeal : productsDeals) {
+			ids.add(currentProductDeal.getIdDeal());
+		}
+		return ids;
+	}
+
+	@Override
+	public void updateStepperDeal(
+			final Integer idProductDeal)
+	{
+		final User loggedUser = ThreadLocalWithUserContext.getUserContext();
+		final Optional<ProductDeal> optionalProductDeal = productDealRepository.findById(idProductDeal);
+		if(!optionalProductDeal.isPresent()) {
+			return;
+		}
+		final ProductDeal productDeal = optionalProductDeal.get();
+		final Optional<Deal> optionalDealToBeUpdated = dealRepository.findById(productDeal.getIdDeal());
+		if (!optionalDealToBeUpdated.isPresent()) {
+			return;
+		}
+		final Deal deal = optionalDealToBeUpdated.get();
+		
+		if (loggedUser.getId().equals(productDeal.getProductProponent().getUser().getId())) {
+			final Integer newStepperValue = Integer.sum(deal.getStepperUserProponent(), Integer.valueOf(1));
+			final Deal dealUpdated = new Deal(
+					deal.getId(), 
+					Boolean.TRUE, 
+					Boolean.TRUE, 
+					Boolean.FALSE,
+					newStepperValue,
+					deal.getStepperUserProposed()); 
+			dealRepository.save(dealUpdated);
+		} else {
+			final Integer newStepperValue = Integer.sum(deal.getStepperUserProposed(), Integer.valueOf(1));
+			final Deal dealUpdated = new Deal(
+					deal.getId(), 
+					Boolean.TRUE, 
+					Boolean.TRUE, 
+					Boolean.FALSE,
+					deal.getStepperUserProponent(), 
+					newStepperValue);
+			dealRepository.save(dealUpdated);
+		}
+	}
+	
+	@Override
+	public List<Deal> getDealById()
+	{
+		final User currentUser = ThreadLocalWithUserContext.getUserContext();
+		final Optional<List<ProductDeal>> optionalProductsDeals = productDealRepository.findByUserIdAndAcceptedDeal(
+				currentUser.getId(), Boolean.TRUE, Boolean.TRUE);
+		if (!optionalProductsDeals.isPresent()) {
+			return Collections.emptyList();
+		}
+		final List<ProductDeal> productsDeals = optionalProductsDeals.get();
+		final List<Integer> ids = buildListWithIdDeal(productsDeals);
+		final List<Deal> deals = dealRepository.findAllById(ids);		
+		return deals;
+	}
 }

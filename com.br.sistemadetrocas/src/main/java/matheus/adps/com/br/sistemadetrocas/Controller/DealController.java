@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import matheus.adps.com.br.sistemadetrocas.DTO.AcceptDealDTO;
 import matheus.adps.com.br.sistemadetrocas.DTO.CreateDealDTO;
+import matheus.adps.com.br.sistemadetrocas.DTO.UpdateStepperDTO;
 import matheus.adps.com.br.sistemadetrocas.Model.Deal;
 import matheus.adps.com.br.sistemadetrocas.Model.ProductDeal;
 import matheus.adps.com.br.sistemadetrocas.Model.User;
@@ -76,5 +78,28 @@ public class DealController
 	{
 		dealService.deleteProductDeal(id);
 		return new ResponseEntity<Void>(HttpStatus.OK);		
+	}
+	
+	@GetMapping(path = "get-products-deals-to-show-panel")
+	public ResponseEntity<List<ProductDeal>> getProductsDealsToShowPanel()
+	{		
+		final List<ProductDeal> productsDeals = dealService.getProductsDealsToShowPanel();
+		return new ResponseEntity<>(productsDeals, HttpStatus.OK);
+	}
+	
+	
+	@PatchMapping(path = "update-stepper-deal")
+	public ResponseEntity<Void> updateStepperDeal(
+			@RequestBody final UpdateStepperDTO updateStepperDto)
+	{
+		dealService.updateStepperDeal(updateStepperDto.getIdProductDeal());
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	@GetMapping(path = "get-deals-to-show-panel")
+	public ResponseEntity<List<Deal>> getDealById()
+	{		
+		final List<Deal> deals = dealService.getDealById();
+		return new ResponseEntity<>(deals, HttpStatus.OK);
 	}
 }

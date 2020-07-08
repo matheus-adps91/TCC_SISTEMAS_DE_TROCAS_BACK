@@ -24,6 +24,13 @@ public interface ProductDealRepository
 			@Param("viewed") Boolean viewed,
 			@Param("answered") Boolean answered);
 	
+	@Query("SELECT pde FROM ProductDeal pde WHERE pde.productProponent.user.id = :id OR pde.productProposed.user.id = :id "+ 
+			"AND pde.idDeal IN ( SELECT id FROM Deal de WHERE de.viewed = :viewed AND de.answered = :answered )" )
+	Optional<List<ProductDeal>> findByUserIdAndAcceptedDeal(
+			@Param("id") Integer id,
+			@Param("viewed") Boolean viewed,
+			@Param("answered") Boolean answered);	
+	
 	Optional<ProductDeal> findByProductProponentIdAndProductProposedId(
 			Integer idProductProponent,
 			Integer idProductProposed);

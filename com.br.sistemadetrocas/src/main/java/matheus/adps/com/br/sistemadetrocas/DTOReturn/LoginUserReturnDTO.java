@@ -13,6 +13,9 @@ public class LoginUserReturnDTO
 	@JsonProperty
 	private String fullName;
 	
+	@JsonProperty
+	private Integer id;
+	
 	public LoginUserReturnDTO() 
 	{
 	}	
@@ -28,11 +31,17 @@ public class LoginUserReturnDTO
 	public LoginUserReturnDTO( 
 		final String token,
 		final String email,
-		final String fullName) 
+		final String fullName,
+		final Integer id) 
 	{
 		this.token = token;
 		this.email = email;
 		this.fullName = fullName;
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	public String getFullName() {

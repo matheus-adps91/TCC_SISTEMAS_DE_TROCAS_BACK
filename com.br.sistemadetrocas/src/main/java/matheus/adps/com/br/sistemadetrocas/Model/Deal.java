@@ -27,10 +27,10 @@ public class Deal
 	private Boolean inactive;
 	
 	@Column
-	private String statusProponent;
+	private Integer stepperUserProponent;
 	
 	@Column
-	private String statusProposed;
+	private Integer stepperUserProposed;
 
 	public Deal() 
 	{
@@ -40,31 +40,30 @@ public class Deal
 			Boolean viewed, 
 			Boolean answered, 
 			Boolean inactive, 
-			String statusProponent,
-			String statusProposed) 
+			Integer stepperUserProponent,
+			Integer stepperUserProposed) 
 	{
 		this.viewed = viewed;
 		this.answered = answered;
 		this.inactive = inactive;
-		this.statusProponent = statusProponent;
-		this.statusProposed = statusProposed;
+		this.stepperUserProponent = stepperUserProponent;
+		this.stepperUserProposed = stepperUserProposed;
 	}
 
-	
 	public Deal(
 			Integer id, 
 			Boolean viewed, 
 			Boolean answered, 
 			Boolean inactive, 
-			String statusProponent,
-			String statusProposed) 
+			Integer stepperUserProponent,
+			Integer stepperUserProposed)
 	{
 		this.id = id;
 		this.viewed = viewed;
 		this.answered = answered;
 		this.inactive = inactive;
-		this.statusProponent = statusProponent;
-		this.statusProposed = statusProposed;
+		this.stepperUserProponent = stepperUserProponent;
+		this.stepperUserProposed = stepperUserProposed;
 	}
 
 	public Integer getId() {
@@ -83,12 +82,12 @@ public class Deal
 		return inactive;
 	}
 
-	public String getStatusProponent() {
-		return statusProponent;
+	public Integer getStepperUserProponent() {
+		return stepperUserProponent;
 	}
 
-	public String getStatusProposed() {
-		return statusProposed;
+	public Integer getStepperUserProposed() {
+		return stepperUserProposed;
 	}
 
 }

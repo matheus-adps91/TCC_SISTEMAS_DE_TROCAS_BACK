@@ -1,6 +1,7 @@
 package matheus.adps.com.br.sistemadetrocas.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import matheus.adps.com.br.sistemadetrocas.DTO.AcceptDealDTO;
 import matheus.adps.com.br.sistemadetrocas.DTO.CreateDealDTO;
@@ -23,4 +24,10 @@ public interface DealService
 
 	void updateAcceptedProposedDeal(
 			AcceptDealDTO acceptedealDTO);
+
+	List<ProductDeal> getProductsDealsToShowPanel();
+
+	void updateStepperDeal(Integer idDeal);
+
+	List<Deal> getDealById();
 }

@@ -30,7 +30,8 @@ public class AuthServiceImpl
 			return null;
 		}
 		final Session openedSession = sessionService.createSession(user);
-		final LoginUserReturnDTO userAuth = new LoginUserReturnDTO(openedSession.getToken(), user.getEmail(), user.getFullName());
+		final LoginUserReturnDTO userAuth = new LoginUserReturnDTO(
+				openedSession.getToken(), user.getEmail(), user.getFullName(), user.getId());
 		return userAuth;
 	}
 
